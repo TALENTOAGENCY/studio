@@ -1,4 +1,26 @@
-export const jobData = {
+
+export interface Job {
+    id: string;
+    title: string;
+    description: string;
+    whatYouWillDo: string[];
+    highlightedSkills: string[];
+    otherSkills: string[];
+    requiredSkills: string[];
+    kpis: string[];
+    workHours: string[];
+    otherDuties: string;
+    education: string;
+    salary: string;
+    benefits: string[];
+    hiringProcess: { title: string; details: string; }[];
+    fullDescription: string;
+    workplace: string;
+    employmentType: string;
+    department: string;
+}
+
+const job1: Omit<Job, 'id' | 'fullDescription'> = {
     title: "Senior Software Engineer [Full Stack]",
     description: "Our client—a top US onsite work marketplace—is searching for skilled developers to join their global engineering team. Build technology that genuinely improves lives while delivering exceptional service. Thrive in a fast-paced environment where your ideas matter and collaboration fuels success. Work with outstanding professionals in a culture that champions learning, growth, and innovation. Passionate about development? Excited by meaningful challenges? Apply below and join a rapidly growing team.",
     whatYouWillDo: [
@@ -65,22 +87,109 @@ export const jobData = {
         { title: "Selection Round", details: "Final interviews and decision-making process." },
         { title: "Offer", details: "Successful candidates receive a competitive offer to join the team." }
     ],
-    fullDescription: ""
+    workplace: "Onsite Work Marketplace",
+    employmentType: "Full-time",
+    department: "Engineering"
 };
 
-jobData.fullDescription = `
-Job Title: ${jobData.title}
+const job2: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "Senior Software Engineer [Full Stack]",
+    description: "Our client—a top US onsite work marketplace—is searching for skilled developers to join their global engineering team. Build technology that genuinely improves lives while delivering exceptional service. Thrive in a fast-paced environment where your ideas matter and collaboration fuels success. Work with outstanding professionals in a culture that champions learning, growth, and innovation. Passionate about development? Excited by meaningful challenges? Apply below and join a rapidly growing team.",
+    whatYouWillDo: [
+        "Develop a cutting-edge technology SaaS solution hosted on AWS that enables today’s and tomorrow’s Gig economy.",
+        "Work on a backend built on PHP, MySQL, and increasingly Node JS microservices, exposed via REST API.",
+        "Contribute to a frontend built with React, React-native, and redux in web and mobile app.",
+        "Build and deploy services using Docker containers managed by Kubernetes.",
+        "Work on service observability, monitoring, alerts, and maintaining SLI/SLO.",
+        "Work closely with the engineering team, Product Management, UX, and our customers to ensure we build and deliver impactful features.",
+        "Assist in preparing technical specs as a team.",
+        "Bring fresh ideas on how technology can be used to solve big problems."
+    ],
+    highlightedSkills: ["React", "Node.js", "PHP", "MySQL", "AWS", "Docker", "Kubernetes", "React-native", "NestJs"],
+    otherSkills: ["Redux", "REST API", "Microservices", "Git", "TypeScript", "Event-Driven Architecture", "Software Observability"],
+    requiredSkills: [
+        "4+ years of experience in the backend.",
+        "3+ years of experience in reactJS.",
+        "Strong understanding of JavaScript/TypeScript, ES6, React, and React-native.",
+        "Backend web experience with languages such as NodeJS, NestJs, PHP, etc.",
+        "Advanced knowledge of SQL – MySQL specifically is a plus.",
+        "Ability to write clean, standards-compliant HTML and CSS. Preprocessor experience (LESS/SASS) is a plus.",
+        "Strong focus and experience Test Driven Development.",
+        "Familiarity with the Git version control system.",
+        "Knowledge of Linux or other Unix-based systems (Ubuntu/Debian is a plus).",
+        "Experience with Web Services-based solutions (REST specifically).",
+        "Experience with Microservice architecture.",
+        "Experience with Mobile Applications (react-native).",
+        "Experience with Event-Driven Architecture(RabbitMQ / Kafka) is a plus.",
+        "Knowledge of Software Observability (Application Performance Monitoring) is a plus.",
+        "Broad technical knowledge – we look for people who can tie together technologies to solve enormous problems.",
+        "Strong written and verbal communication skills.",
+        "Ability to work well with others as part of a team and across teams.",
+        "Ability to break down more significant initiatives into manageable pieces.",
+        "Experience working with offshore teams is a plus."
+    ],
+    kpis: [
+        "Delivery of features as agreed upon in planning ceremonies.",
+        "Quality of deliverables to be measured by the number of production bugs.",
+        "Team members' feedback on collaboration.",
+        "Support of other engineers on complicated coding problems.",
+        "Testing practices and implementation of automated tests."
+    ],
+    workHours: [
+        "Experience working with offshore teams is a plus.",
+        "Willingness to work from 1 PM to 10 PM BD time."
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "B.Sc. / M.Sc. in Computer Science & Engineering from any reputed University or equivalent practical experience.",
+    salary: "Competitive and above market average salary.",
+    benefits: [
+        "Festival Bonus. (Each accounts for 50% of the Gross)",
+        "Field Nation LLC Performance Reward.",
+        "Leave Encashment.",
+        "Medical Insurance.",
+        "Lunch- Fully Subsidized.",
+        "Transportation Service - Drop Off.",
+        "Gym Membership.",
+        "Career Development Budget.",
+        "Mobile Bill."
+    ],
+    hiringProcess: [
+        { title: "Cold Call", details: "Non-interview discussion session with Talento TA experts on compatibility, salary, notice period." },
+        { title: "Technical Session [Client Company]", details: "Tech Test, Tech Interview, Selection Round" }
+    ],
+    workplace: "US Onsite Work Marketplace",
+    employmentType: "Full-time",
+    department: "Engineering"
+};
 
-Description: ${jobData.description}
+const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
+    return `
+Job Title: ${job.title}
+
+Description: ${job.description}
 
 What You Will Do:
-${jobData.whatYouWillDo.map(item => `- ${item}`).join('\n')}
+${job.whatYouWillDo.map(item => `- ${item}`).join('\n')}
 
 Required Skill Sets:
-${jobData.requiredSkills.map(item => `- ${item}`).join('\n')}
+${job.requiredSkills.map(item => `- ${item}`).join('\n')}
 
 Key Performance Matrix:
-${jobData.kpis.map(item => `- ${item}`).join('\n')}
+${job.kpis.map(item => `- ${item}`).join('\n')}
 
-Education: ${jobData.education}
+Education: ${job.education}
 `.trim();
+};
+
+export const jobs: Job[] = [
+    {
+        ...job1,
+        id: "senior-software-engineer-full-stack-1",
+        fullDescription: buildFullDescription(job1)
+    },
+    {
+        ...job2,
+        id: "senior-software-engineer-full-stack-2",
+        fullDescription: buildFullDescription(job2)
+    }
+];

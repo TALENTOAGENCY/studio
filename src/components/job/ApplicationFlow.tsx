@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useCallback } from "react";
@@ -21,8 +22,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, Mail, Terminal, UploadCloud, User, FileText, CheckCircle } from "lucide-react";
 import { MatchResult } from "./MatchResult";
-import { matchJob, type JobMatchingOutput } from "@/ai/flows/ai-job-matching";
+import { applyForJob, type JobApplicationOutput } from "@/ai/flows/apply-for-job";
 import { useToast } from "@/hooks/use-toast";
+import { Job } from "@/lib/job-data";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -43,7 +45,7 @@ const formSchema = z.object({
 type ApplicationFormValues = z.infer<typeof formSchema>;
 
 interface ApplicationFlowProps {
-  jobDescription: string;
+  job: Job;
   onSubmissionComplete: () => void;
 }
 
@@ -56,9 +58,9 @@ const readFileAsDataURI = (file: File): Promise<string> => {
     });
 };
 
-export function ApplicationFlow({ jobDescription, onSubmissionComplete }: ApplicationFlowProps) {
+export function ApplicationFlow({ job, onSubmissionComplete }: ApplicationFlowProps) {
   const [step, setStep] = useState<"form" | "loading" | "result" | "error">("form");
-  const [matchResult, setMatchResult] = useState<JobMatchingOutput | null>(null);
+  const [matchResult, setMatchResult] = useState<JobApplicationOutput | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const { toast } = useToast();
 
@@ -90,17 +92,20 @@ export function ApplicationFlow({ jobDescription, onSubmissionComplete }: Applic
       const resumeFile = values.resume[0];
       const resumeDataUri = await readFileAsDataURI(resumeFile);
       
-      const result = await matchJob({
+      const result = await applyForJob({
+        applicantName: values.name,
+        applicantEmail: values.email,
         resumeDataUri,
-        jobDescription,
-        additionalDetails: values.coverLetter,
+        jobTitle: job.title,
+        jobDescription: job.fullDescription,
+        coverLetter: values.coverLetter,
       });
 
       setMatchResult(result);
       setStep("result");
       onSubmissionComplete();
     } catch (error) {
-      console.error("Job matching failed:", error);
+      console.error("Job application failed:", error);
       const message = error instanceof Error ? error.message : "An unknown error occurred.";
       setErrorMessage(message);
       setStep("error");
@@ -210,8 +215,8 @@ export function ApplicationFlow({ jobDescription, onSubmissionComplete }: Applic
         {step === "loading" && (
           <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center py-12">
             <Loader2 className="mx-auto h-16 w-16 animate-spin text-primary mb-4" />
-            <p className="text-lg font-semibold font-headline">Analyzing your profile...</p>
-            <p className="text-muted-foreground">Our AI is matching your skills to the job requirements.</p>
+            <p className="text-lg font-semibold font-headline">Analyzing your profile & Submitting...</p>
+            <p className="text-muted-foreground">Our AI is matching your skills and sending your application.</p>
           </motion.div>
         )}
 
@@ -220,7 +225,7 @@ export function ApplicationFlow({ jobDescription, onSubmissionComplete }: Applic
              <div className="text-center py-6">
                 <CheckCircle className="mx-auto h-16 w-16 text-green-500 mb-4" />
                 <h3 className="text-2xl font-bold font-headline">Application Submitted!</h3>
-                <p className="text-muted-foreground mt-1 mb-6">Here is your initial AI-powered match analysis.</p>
+                <p className="text-muted-foreground mt-1 mb-6">Your application has been sent. Here is your initial AI-powered match analysis.</p>
                 <MatchResult score={matchResult.matchScore} summary={matchResult.summary} />
              </div>
           </motion.div>
@@ -230,7 +235,7 @@ export function ApplicationFlow({ jobDescription, onSubmissionComplete }: Applic
           <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Alert variant="destructive">
               <Terminal className="h-4 w-4" />
-              <AlertTitle>Analysis Failed</AlertTitle>
+              <AlertTitle>Application Failed</AlertTitle>
               <AlertDescription>
                 <p>{errorMessage}</p>
                 <Button variant="destructive" size="sm" className="mt-4" onClick={() => setStep("form")}>
