@@ -1,15 +1,16 @@
 
 import { Briefcase, Building, Code, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { TalentoLogo } from "@/components/icons/TalentoLogo";
 import { jobs, Job } from "@/lib/job-data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ShareJobButton } from "@/components/job/ShareJobButton";
 
 const JobListItem = ({ job }: { job: Job }) => (
-  <Card className="hover:shadow-lg transition-shadow">
+  <Card className="hover:shadow-lg transition-shadow flex flex-col">
     <CardHeader>
       <CardTitle className="font-headline text-xl text-primary">{job.title}</CardTitle>
       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
@@ -18,7 +19,7 @@ const JobListItem = ({ job }: { job: Job }) => (
         <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.department}</div>
       </div>
     </CardHeader>
-    <CardContent>
+    <CardContent className="flex-grow">
       <p className="text-foreground/80 mb-4 line-clamp-2">{job.description}</p>
       <div className="flex flex-wrap gap-2 mb-6">
         {job.highlightedSkills.slice(0, 5).map(skill => (
@@ -26,10 +27,13 @@ const JobListItem = ({ job }: { job: Job }) => (
         ))}
         {job.highlightedSkills.length > 5 && <Badge variant="outline">+{job.highlightedSkills.length - 5} more</Badge>}
       </div>
-       <Button asChild variant="outline">
+    </CardContent>
+    <CardFooter className="flex justify-between items-center">
+      <Button asChild variant="outline">
         <Link href={`/jobs/${job.id}`}>View Details</Link>
       </Button>
-    </CardContent>
+      <ShareJobButton job={job} />
+    </CardFooter>
   </Card>
 );
 

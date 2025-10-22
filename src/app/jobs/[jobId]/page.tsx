@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { TalentoLogo } from "@/components/icons/TalentoLogo";
 import { JobApplication } from "@/components/job/JobApplication";
+import { ShareJobButton } from "@/components/job/ShareJobButton";
 
 type SkillBadgeProps = {
   skill: string;
@@ -74,7 +75,8 @@ export default function JobDetailPage({ params }: { params: { jobId: string } })
                     <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {jobData.department}</div>
                   </div>
                 </div>
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 flex items-start gap-2">
+                  <ShareJobButton job={jobData} />
                   <JobApplication job={jobData} />
                 </div>
               </div>
