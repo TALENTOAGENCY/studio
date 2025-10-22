@@ -5,7 +5,7 @@ import { Award, Briefcase, Building, Clock, DollarSign, ListChecks, MapPin, Netw
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { TalentoLogo } from "@/components/icons/TalentoLogo";
+import TalentoLogo from "@/components/icons/TalentoLogo";
 import { JobApplication } from "@/components/job/JobApplication";
 import { ShareJobButton } from "@/components/job/ShareJobButton";
 
