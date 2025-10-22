@@ -14,7 +14,7 @@ export const TalentoLogo = (props: React.SVGProps<SVGSVGElement>) => (
       y="0"
       width="400"
       height="100"
-      fill="#14B8A6"
+      fill="#3b5f6f"
       rx="8"
     />
     
