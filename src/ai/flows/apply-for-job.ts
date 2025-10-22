@@ -80,17 +80,16 @@ const applicationFlow = ai.defineFlow(
   async (input) => {
     const analysisPrompt = ai.definePrompt({
         name: 'jobMatchAnalysisPrompt',
-        tools: [sendEmailTool],
         input: { schema: JobApplicationInputSchema },
+        output: { schema: z.object({
+            matchScore: JobApplicationOutputSchema.shape.matchScore,
+            summary: JobApplicationOutputSchema.shape.summary,
+        })},
         prompt: `You are an AI assistant for a hiring manager. Your tasks are:
     
     1.  **Analyze the Resume**: Carefully review the applicant's resume and cover letter (if provided) against the job description.
     2.  **Score the Applicant**: Generate a \`matchScore\` from 0 to 100 based on how well the applicant's skills and experience align with the job requirements.
     3.  **Summarize the Match**: Write a concise \`summary\` for the hiring manager, highlighting the candidate's key strengths, potential weaknesses, and overall fit for the role.
-    4.  **Send an Email**: Use the \`sendEmail\` tool to send the applicant's information to the hiring manager at \`dawod.analyst@gmail.com\`. The email should have:
-        *   A subject line: "New Application: {Job Title} - {Applicant Name}".
-        *   A body containing the applicant's name, email, the generated match score, and the summary.
-        *   The applicant's resume attached. The filename should be 'resume.pdf' or similar.
     
     Applicant Name: {{{applicantName}}}
     Applicant Email: {{{applicantEmail}}}
@@ -109,9 +108,40 @@ const applicationFlow = ai.defineFlow(
     `,
     });
 
-    const { output } = await analysisPrompt(input);
+    // Step 1: Get the analysis from the LLM.
+    const { output: analysisOutput } = await analysisPrompt(input);
+
+    if (!analysisOutput) {
+        throw new Error('Could not analyze the application.');
+    }
+
+    // Step 2: Use the analysis to send the email.
+    await ai.generate({
+        prompt: `The user, ${input.applicantName}, has applied for the job of ${input.jobTitle}. The analysis is complete. Now, send an email to the hiring manager with the results.`,
+        tools: [sendEmailTool],
+        output: {
+            tool: sendEmailTool,
+            // Pre-fill the tool's input with the data we already have.
+            input: {
+                subject: `New Application: ${input.jobTitle} - ${input.applicantName}`,
+                body: `
+                    Applicant Name: ${input.applicantName}
+                    Applicant Email: ${input.applicantEmail}
+                    Match Score: ${analysisOutput.matchScore}
+                    Summary: ${analysisOutput.summary}
+                `,
+                attachments: [
+                    {
+                        filename: 'resume.pdf', // Assuming PDF, adjust if needed
+                        dataUri: input.resumeDataUri,
+                    },
+                ],
+            },
+        },
+    });
+
     return {
-        ...output,
+        ...analysisOutput,
         confirmationId: new Date().getTime().toString(), // Generate a simple confirmation ID
     };
   }
