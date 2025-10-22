@@ -34,7 +34,7 @@ const JobApplicationOutputSchema = z.object({
   summary: z.string().describe('A brief summary of the applicant\'s strengths and weaknesses for the role.'),
   confirmationId: z.string().describe('A confirmation ID for the application submission.'),
 });
-export type JobApplicationOutput = z-infer<typeof JobApplicationOutputSchema>;
+export type JobApplicationOutput = z.infer<typeof JobApplicationOutputSchema>;
 
 const sendEmailTool = ai.defineTool(
     {
@@ -85,8 +85,8 @@ const applicationFlow = ai.defineFlow(
         prompt: `You are an AI assistant for a hiring manager. Your tasks are:
     
     1.  **Analyze the Resume**: Carefully review the applicant's resume and cover letter (if provided) against the job description.
-    2.  **Score the Applicant**: Generate a `matchScore` from 0 to 100 based on how well the applicant's skills and experience align with the job requirements.
-    3.  **Summarize the Match**: Write a concise `summary` for the hiring manager, highlighting the candidate's key strengths, potential weaknesses, and overall fit for the role.
+    2.  **Score the Applicant**: Generate a \`matchScore\` from 0 to 100 based on how well the applicant's skills and experience align with the job requirements.
+    3.  **Summarize the Match**: Write a concise \`summary\` for the hiring manager, highlighting the candidate's key strengths, potential weaknesses, and overall fit for the role.
     4.  **Send an Email**: Use the \`sendEmail\` tool to send the applicant's information to the hiring manager at \`dawod.analyst@gmail.com\`. The email should have:
         *   A subject line: "New Application: {Job Title} - {Applicant Name}".
         *   A body containing the applicant's name, email, the generated match score, and the summary.
