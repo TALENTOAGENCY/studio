@@ -108,13 +108,9 @@ const applicationFlow = ai.defineFlow(
         `,
     });
 
-    const analysis = await analysisPrompt.generate({
-        input: {
-            ...input,
-        }
-    });
+    const { output } = await analysisPrompt(input);
 
-    const { matchScore, summary } = analysis.output()!;
+    const { matchScore, summary } = output!;
 
     await ai.generate({
         prompt: `The user, ${input.applicantName}, has applied for the job of ${input.jobTitle}. Their match score is ${matchScore}. Send an email to the hiring manager with their application details, the AI-generated summary, and their resume attached.`,
