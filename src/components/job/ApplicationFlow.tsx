@@ -206,7 +206,7 @@ export function ApplicationFlow({ job, onSubmissionComplete }: ApplicationFlowPr
                   )}
                 />
 
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">Submit Application & Get AI Analysis</Button>
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">Submit Application</Button>
               </form>
             </Form>
           </motion.div>
@@ -215,8 +215,8 @@ export function ApplicationFlow({ job, onSubmissionComplete }: ApplicationFlowPr
         {step === "loading" && (
           <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center py-12">
             <Loader2 className="mx-auto h-16 w-16 animate-spin text-primary mb-4" />
-            <p className="text-lg font-semibold font-headline">Analyzing your profile & Submitting...</p>
-            <p className="text-muted-foreground">Our AI is matching your skills and sending your application.</p>
+            <p className="text-lg font-semibold font-headline">Submitting Application...</p>
+            <p className="text-muted-foreground">Please wait a moment.</p>
           </motion.div>
         )}
 
@@ -225,8 +225,7 @@ export function ApplicationFlow({ job, onSubmissionComplete }: ApplicationFlowPr
              <div className="text-center py-6">
                 <CheckCircle className="mx-auto h-16 w-16 text-green-500 mb-4" />
                 <h3 className="text-2xl font-bold font-headline">Application Submitted!</h3>
-                <p className="text-muted-foreground mt-1 mb-6">Your application has been sent. Here is your initial AI-powered match analysis.</p>
-                <MatchResult score={matchResult.matchScore} summary={matchResult.summary} />
+                <p className="text-muted-foreground mt-1 mb-6">Your application has been sent. The hiring manager will review it shortly.</p>
              </div>
           </motion.div>
         )}

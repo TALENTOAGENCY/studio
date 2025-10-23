@@ -78,46 +78,9 @@ const applicationFlow = ai.defineFlow(
     outputSchema: JobApplicationOutputSchema,
   },
   async (input) => {
-    const analysisPrompt = ai.definePrompt({
-        name: 'jobMatchAnalysisPrompt',
-        input: { schema: JobApplicationInputSchema },
-        output: { schema: z.object({
-            matchScore: JobApplicationOutputSchema.shape.matchScore,
-            summary: JobApplicationOutputSchema.shape.summary,
-        })},
-        prompt: `You are an AI assistant for a hiring manager. Your tasks are:
-    
-    1.  **Analyze the Resume**: Carefully review the applicant's resume and cover letter (if provided) against the job description.
-    2.  **Score the Applicant**: Generate a \`matchScore\` from 0 to 100 based on how well the applicant's skills and experience align with the job requirements.
-    3.  **Summarize the Match**: Write a concise \`summary\` for the hiring manager, highlighting the candidate's key strengths, potential weaknesses, and overall fit for the role.
-    
-    Applicant Name: {{{applicantName}}}
-    Applicant Email: {{{applicantEmail}}}
-    Job Title: {{{jobTitle}}}
-    
-    Job Description:
-    {{{jobDescription}}}
-    
-    {{#if coverLetter}}
-    Cover Letter:
-    {{{coverLetter}}}
-    {{/if}}
-
-    Resume:
-    {{media url=resumeDataUri}}
-    `,
-    });
-
-    // Step 1: Get the analysis from the LLM.
-    const { output: analysisOutput } = await analysisPrompt(input);
-
-    if (!analysisOutput) {
-        throw new Error('Could not analyze the application.');
-    }
-
-    // Step 2: Use the analysis to send the email.
+    // Step 1: Use the analysis to send the email.
     await ai.generate({
-        prompt: `The user, ${input.applicantName}, has applied for the job of ${input.jobTitle}. The analysis is complete. Now, send an email to the hiring manager with the results.`,
+        prompt: `The user, ${input.applicantName}, has applied for the job of ${input.jobTitle}. Send an email to the hiring manager with their application.`,
         tools: [sendEmailTool],
         output: {
             tool: sendEmailTool,
@@ -127,8 +90,7 @@ const applicationFlow = ai.defineFlow(
                 body: `
                     Applicant Name: ${input.applicantName}
                     Applicant Email: ${input.applicantEmail}
-                    Match Score: ${analysisOutput.matchScore}
-                    Summary: ${analysisOutput.summary}
+                    Cover Letter: ${input.coverLetter || 'Not provided'}
                 `,
                 attachments: [
                     {
@@ -141,7 +103,9 @@ const applicationFlow = ai.defineFlow(
     });
 
     return {
-        ...analysisOutput,
+        // Since we are skipping the analysis, we'll return default values.
+        matchScore: 0,
+        summary: "Your application has been submitted successfully. The hiring manager will review it shortly.",
         confirmationId: new Date().getTime().toString(), // Generate a simple confirmation ID
     };
   }

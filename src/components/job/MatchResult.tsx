@@ -67,6 +67,10 @@ const CircularProgress = ({ score }: { score: number }) => {
 };
 
 export const MatchResult = ({ score, summary }: MatchResultProps) => {
+  if (score === 0) {
+    return null;
+  }
+  
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-center gap-4">
