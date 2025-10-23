@@ -47,7 +47,6 @@ export default function Home() {
               <TalentoLogo className="h-8 w-auto text-primary" />
             </a>
             <nav className="flex items-center gap-4">
-              <a href="https://talento.agency/jobs/" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">All Jobs</a>
               <a href="https://talento.agency/" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">Home</a>
             </nav>
           </div>
