@@ -78,23 +78,66 @@ const applicationFlow = ai.defineFlow(
     outputSchema: JobApplicationOutputSchema,
   },
   async (input) => {
-    // Step 1: Use the analysis to send the email.
+    
+    const analysisPrompt = ai.definePrompt({
+        name: 'jobApplicationAnalysis',
+        input: { schema: JobApplicationInputSchema },
+        output: { schema: z.object({
+            matchScore: z.number(),
+            summary: z.string(),
+        }) },
+        prompt: `
+            Analyze the following resume and cover letter for the job of "{{jobTitle}}".
+            
+            Job Description:
+            ---
+            {{jobDescription}}
+            ---
+            
+            Resume:
+            ---
+            {{media url=resumeDataUri}}
+            ---
+            
+            Cover Letter:
+            ---
+            {{coverLetter}}
+            ---
+            
+            Based on the information, provide a match score from 0-100 and a brief summary of the candidate's fitness for the role.
+        `,
+    });
+
+    const analysis = await analysisPrompt.generate({
+        input: {
+            ...input,
+        }
+    });
+
+    const { matchScore, summary } = analysis.output()!;
+
     await ai.generate({
-        prompt: `The user, ${input.applicantName}, has applied for the job of ${input.jobTitle}. Send an email to the hiring manager with their application.`,
+        prompt: `The user, ${input.applicantName}, has applied for the job of ${input.jobTitle}. Their match score is ${matchScore}. Send an email to the hiring manager with their application details, the AI-generated summary, and their resume attached.`,
         tools: [sendEmailTool],
         output: {
             tool: sendEmailTool,
-            // Pre-fill the tool's input with the data we already have.
             input: {
                 subject: `New Application: ${input.jobTitle} - ${input.applicantName}`,
                 body: `
+                    A new application has been submitted.
+
                     Applicant Name: ${input.applicantName}
                     Applicant Email: ${input.applicantEmail}
-                    Cover Letter: ${input.coverLetter || 'Not provided'}
+                    
+                    AI Match Score: ${matchScore}%
+                    AI Summary: ${summary}
+                    
+                    Cover Letter: 
+                    ${input.coverLetter || 'Not provided'}
                 `,
                 attachments: [
                     {
-                        filename: 'resume.pdf', // Assuming PDF, adjust if needed
+                        filename: 'resume.pdf',
                         dataUri: input.resumeDataUri,
                     },
                 ],
@@ -103,10 +146,9 @@ const applicationFlow = ai.defineFlow(
     });
 
     return {
-        // Since we are skipping the analysis, we'll return default values.
-        matchScore: 0,
-        summary: "Your application has been submitted successfully. The hiring manager will review it shortly.",
-        confirmationId: new Date().getTime().toString(), // Generate a simple confirmation ID
+        matchScore,
+        summary,
+        confirmationId: new Date().getTime().toString(),
     };
   }
 );
