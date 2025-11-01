@@ -143,7 +143,7 @@ Passionate about development? Excited by meaningful challenges? Apply below and 
         "This job operates in a professional office environment. This role routinely uses standard office equipment such as computers, software tools, phones, photocopiers, and filing cabinets."
     ],
     otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
-    education: "B.Sc./ M.Sc. in Computer Science & Engineering from any reputed University or equivalent practical experience.",
+    education: "B.Sc. / M.Sc. in Computer Science & Engineering from any reputed University or equivalent practical experience.",
     salary: "Competitive and above market average salary.",
     benefits: [
         "Festival Bonus (Each accounts for 50% of the Gross)",
