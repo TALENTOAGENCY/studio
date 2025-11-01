@@ -188,12 +188,12 @@ Education: ${job.education}
 export const jobs: Job[] = [
     {
         ...job1,
-        id: "senior-software-engineer-full-stack-1",
+        id: "1",
         fullDescription: buildFullDescription(job1)
     },
     {
         ...job2,
-        id: "staff-software-engineer-2",
+        id: "2",
         fullDescription: buildFullDescription(job2)
     }
 ];
