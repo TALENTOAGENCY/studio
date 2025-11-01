@@ -15,7 +15,7 @@ Thank you,
 [Your Name]
 `;
 
-  const mailtoLink = `mailto:dawod.analyst@gmail.com?subject=${encodeURIComponent(`Application for ${job.title}`)}&body=${encodeURIComponent(emailBody)}`;
+  const mailtoLink = `mailto:talentoagency2@gmail.com?subject=${encodeURIComponent(`Application for ${job.title}`)}&body=${encodeURIComponent(emailBody)}`;
 
   return (
     <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-md hover:shadow-lg transition-shadow">
