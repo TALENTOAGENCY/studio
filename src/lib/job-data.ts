@@ -1,4 +1,3 @@
-
 export interface Job {
     id: string;
     title: string;
@@ -166,6 +165,76 @@ Passionate about development? Excited by meaningful challenges? Apply below and 
     department: "Engineering"
 };
 
+const job3: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "Director, Service Delivery",
+    description: `TALENTO is thrilled to source top Bangladeshi marketing service delivery talent for our client — a premier North American offshore marketing agency powering global SMBs.
+
+The Director of Service Delivery is the organization's delivery command center! This C-suite caliber role orchestrates seamless client fulfillment at scale, owning mission-critical execution, enterprise quality benchmarks, dynamic resource allocation, and exponential operational growth.
+
+Reporting to the COO, you'll engineer bulletproof delivery cadence and scalable throughput models. In lockstep with Customer Success leadership, convert their strategic "what & why" into your tactical "how & when" mastery – routinely surpassing client commitments via gated governance, AI-driven process optimization, and 24/7 operational resilience. You're the client promise fulfillment engine!`,
+    whatYouWillDo: [
+        "Shape company-wide delivery strategy, turning customer commitments into actionable roadmaps and capacity plans.",
+        "Partner seamlessly with Customer Success to exceed client expectations while advising the COO on scalability and operational excellence.",
+        "Lead delivery teams from Project Managers to execution crews, ensuring all client work hits deadlines, scope, budget, and quality targets.",
+        "Own timelines, risks, and dependencies across accounts while serving as the ultimate escalation point.",
+        "Define playbooks, SOPs, and QA standards aligned with Customer Success needs.",
+        "Build scalable governance and KPIs (timeliness, quality, utilization) that boost CSAT and retention.",
+        "Rapidly scale Service Delivery while preserving quality and engagement.",
+        "Design team structures and resourcing aligned with Customer Success accounts.",
+        "Hire, mentor, and develop managers to build strong second-line leadership and a culture of ownership and excellence.",
+        "Serve as the primary partner to the Director of Customer Success, joining regular reviews on client health, risks, and growth.",
+        "Partner with Sales on pre-sales scoping, Finance on utilization and forecasting, and international stakeholders on performance updates.",
+        "Spot delivery risks early and implement fixes before client impact; drive ongoing improvements in tools, workflows, and practices."
+    ],
+    highlightedSkills: ["Service Delivery Leadership", "Operations Management", "Team Scaling", "Process Optimization", "Client Account Management", "Governance & QA Standards", "Cross-Functional Collaboration", "Risk Management"],
+    otherSkills: ["Marketing Agency Experience", "Professional Services Background", "AI-Driven Optimization", "KPI Definition", "Stakeholder Management", "Capacity Planning", "SOP Development"],
+    requiredSkills: [
+        "10–15+ years of experience in Service Delivery, Operations, or Client Services leadership.",
+        "Strong preference for candidates with a marketing agency or professional services background.",
+        "5+ years of experience leading large, multi-layered teams in high-growth environments.",
+        "Proven ability to scale delivery organizations while maintaining quality and predictability.",
+        "Experience working with North American or global clients and stakeholders.",
+        "Strong operational discipline, analytical thinking, and structured problem-solving skills.",
+        "Excellent communication and stakeholder management skills (written & verbal).",
+        "Demonstrated experience in building and mentoring high-performing delivery teams.",
+        "Ability to partner closely with Customer Success / Account Management functions."
+    ],
+    kpis: [
+        "Client satisfaction (CSAT) and retention metrics.",
+        "On-time delivery percentage and predictability of commitments.",
+        "Delivery quality scores / defect rates / rework levels.",
+        "Team utilization and throughput at scale.",
+        "Successful scaling of delivery organization (headcount growth without quality drop).",
+        "Timely risk identification and resolution.",
+        "Continuous process improvement impact (efficiency gains, cost savings)."
+    ],
+    workHours: [
+        "Monday – Friday",
+        "2:00 PM – 11:00 PM BD time (to align with North American clients)",
+        "Hybrid model (Dhaka, Bangladesh)"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor’s or Master’s degree in Business, Management, Marketing, Communications, or related field; or equivalent professional experience.",
+    salary: "BDT 200,000 – 400,000 per month (depending on experience)",
+    benefits: [
+        "Bangladeshi & North American government holidays",
+        "Year-end 1-week break",
+        "Bi-annual festival bonuses",
+        "Annual salary review",
+        "Paid casual & sick leave",
+        "Friendly office culture"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "Discussion with TALENTO team on experience, expectations, notice period, and cultural fit." },
+        { title: "Leadership Interviews", details: "Multiple rounds including COO and Director of Customer Success." },
+        { title: "Case / Strategy Discussion", details: "Presentation or deep-dive on service delivery scaling, governance, or client fulfillment scenarios." },
+        { title: "Offer", details: "Competitive offer with detailed compensation and benefits package." }
+    ],
+    workplace: "Dhaka, Bangladesh (Hybrid Model)",
+    employmentType: "Fixed Term",
+    department: "Service Delivery"
+};
+
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
 Job Title: ${job.title}
@@ -186,6 +255,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job3,
+        id: "ta1534",  // new unique ID
+        fullDescription: buildFullDescription(job3)
+    },
     {
         ...job1,
         id: "ta1532",
