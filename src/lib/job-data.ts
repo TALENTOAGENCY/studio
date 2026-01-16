@@ -1,3 +1,4 @@
+
 export interface Job {
     id: string;
     title: string;
@@ -230,7 +231,7 @@ Reporting to the COO, you'll engineer bulletproof delivery cadence and scalable 
         { title: "Case / Strategy Discussion", details: "Presentation or deep-dive on service delivery scaling, governance, or client fulfillment scenarios." },
         { title: "Offer", details: "Competitive offer with detailed compensation and benefits package." }
     ],
-    workplace: "Dhaka, Bangladesh (Hybrid Model)",
+    workplace: "Dhaka (Hybrid)",
     employmentType: "Fixed Term",
     department: "Service Delivery"
 };
@@ -240,6 +241,9 @@ const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
 Job Title: ${job.title}
 
 Description: ${job.description}
+Salary: ${job.salary}
+
+What You Will Do: ${job.description}
 
 What You Will Do:
 ${job.whatYouWillDo.map(item => `- ${item}`).join('\n')}

@@ -17,9 +17,10 @@ const JobListItem = ({ job }: { job: Job }) => (
     <CardHeader>
       <CardTitle className="font-headline text-xl text-primary">{job.title}</CardTitle>
       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-        <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> US (Remote)</div>
+        <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {job.workplace}</div>
         <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {job.employmentType}</div>
         <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.department}</div>
+        <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.salary}</div>
       </div>
     </CardHeader>
     <CardContent className="flex-grow">
