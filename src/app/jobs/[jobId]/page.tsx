@@ -56,7 +56,7 @@ export default function JobDetailPage({ params }: { params: { jobId: string } })
             </a>
             <nav className="flex items-center gap-4">
                <a href="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">All Jobs</a>
-               <a href="https://talento.agency/about-us/" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">About</a>
+               <a href="https://talento.agency/about-us/" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"></a>
             </nav>
           </div>
         </div>
