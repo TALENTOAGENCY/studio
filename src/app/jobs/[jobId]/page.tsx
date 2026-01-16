@@ -1,13 +1,15 @@
 
 import { jobs, Job } from "@/lib/job-data";
 import { notFound } from 'next/navigation';
-import { Award, Briefcase, Building, Clock, DollarSign, ListChecks, MapPin, Network, Target } from "lucide-react";
+import { Award, Briefcase, Building, Clock, DollarSign, ListChecks, MapPin, Network, Target, ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import TalentoLogo from "@/components/icons/TalentoLogo";
 import { JobApplication } from "@/components/job/JobApplication";
 import { ShareJobButton } from "@/components/job/ShareJobButton";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type SkillBadgeProps = {
   skill: string;
@@ -55,7 +57,6 @@ export default function JobDetailPage({ params }: { params: { jobId: string } })
               <TalentoLogo className="h-8 w-auto text-primary" />
             </a>
             <nav className="flex items-center gap-4">
-               <a href="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">All Jobs</a>
                <a href="https://talento.agency/about-us/" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"></a>
             </nav>
           </div>
@@ -63,6 +64,14 @@ export default function JobDetailPage({ params }: { params: { jobId: string } })
       </header>
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <Button asChild variant="ghost" className="text-muted-foreground hover:text-primary px-0">
+              <Link href="/">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to all jobs
+              </Link>
+            </Button>
+          </div>
           <Card className="overflow-hidden shadow-lg">
             <CardContent className="p-6 md:p-8">
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
