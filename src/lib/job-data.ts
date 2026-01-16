@@ -233,7 +233,7 @@ Reporting to the COO, you'll engineer bulletproof delivery cadence and scalable 
     ],
     workplace: "Dhaka (Hybrid)",
     employmentType: "Fixed Term",
-    department: "Service Delivery"
+    department: "Service Delivery",
 };
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
@@ -241,7 +241,6 @@ const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
 Job Title: ${job.title}
 
 Description: ${job.description}
-Salary: ${job.salary}
 
 What You Will Do: ${job.description}
 

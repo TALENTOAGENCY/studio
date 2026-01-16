@@ -2,9 +2,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Briefcase, Building, Code, MapPin } from "lucide-react";
+import { Briefcase, Building, Code, MapPin, Receipt } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import TalentoLogo from "@/components/icons/TalentoLogo";
 import { jobs, Job } from "@/lib/job-data";
@@ -20,7 +20,7 @@ const JobListItem = ({ job }: { job: Job }) => (
         <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {job.workplace}</div>
         <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {job.employmentType}</div>
         <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.department}</div>
-        <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.salary}</div>
+        <div className="flex items-center gap-1.5"><Receipt className="h-4 w-4" /> {job.salary}</div>
       </div>
     </CardHeader>
     <CardContent className="flex-grow">

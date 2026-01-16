@@ -79,7 +79,7 @@ export default function JobDetailPage({ params }: { params: { jobId: string } })
                   <Badge variant="outline" className="mb-2">{jobData.workplace}</Badge>
                   <h1 className="text-3xl md:text-4xl font-bold font-headline text-primary">{jobData.title}</h1>
                   <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground">
-                    <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> US (Remote)</div>
+                    <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {jobData.workplace}</div>
                     <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {jobData.employmentType}</div>
                     <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {jobData.department}</div>
                   </div>
