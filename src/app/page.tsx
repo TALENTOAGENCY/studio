@@ -1,9 +1,12 @@
 
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { Briefcase, Building, Code, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { TalentoLogo } from "@/components/icons/TalentoLogo";
+import TalentoLogo from "@/components/icons/TalentoLogo";
 import { jobs, Job } from "@/lib/job-data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -38,6 +41,27 @@ const JobListItem = ({ job }: { job: Job }) => (
 );
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>(jobs);
+
+  useEffect(() => {
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const filtered = jobs.filter(job => {
+      const { title, description, highlightedSkills, otherSkills } = job;
+      return (
+        title.toLowerCase().includes(lowercasedQuery) ||
+        description.toLowerCase().includes(lowercasedQuery) ||
+        highlightedSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery)) ||
+        otherSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery))
+      );
+    });
+    setFilteredJobs(filtered);
+  }, [searchQuery]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b">
@@ -61,13 +85,22 @@ export default function Home() {
           </div>
           <div className="mb-8 relative">
             <Code className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input placeholder="Search by keyword (e.g., React, Node JS)" className="pl-10" />
+            <Input 
+              placeholder="Search by keyword (e.g., React, Node JS)" 
+              className="pl-10"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
           </div>
           
           <div className="space-y-6">
-            {jobs.map(job => (
-                <JobListItem key={job.id} job={job} />
-            ))}
+            {filteredJobs.length > 0 ? (
+              filteredJobs.map(job => (
+                  <JobListItem key={job.id} job={job} />
+              ))
+            ) : (
+                <p className="text-center text-muted-foreground">No jobs found matching your search.</p>
+            )}
           </div>
 
         </div>
