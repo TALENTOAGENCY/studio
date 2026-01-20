@@ -628,7 +628,7 @@ const job9: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'ex
 
 const job10: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Data Engineer",
-    description: "We’re looking for a Data Engineer to manage and optimize our data infrastructure, pipelines, and reporting dashboards. You will ensure secure access, reliable data ingestion, and accurate analytics to support business and digital marketing decisions. This role is perfect for someone who enjoys building robust data workflows, automating processes, and enhancing reporting systems.",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
         "Ensure proper app access and MFA for secure authentication",
         "Optimize Snowflake views (change rollup view to union all tab views) for consistent reporting",
