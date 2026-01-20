@@ -27,13 +27,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const JobListItem = ({ job }: { job: Job }) => (
   <Link href={`/jobs/${job.id}`} className="block group rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
     <Card className="relative hover:shadow-lg transition-shadow flex flex-col h-full group-hover:border-primary/50">
-        <Badge variant="outline" className="absolute top-4 right-4 z-10 flex items-center gap-1.5 text-green-600 border-green-600/30 bg-green-50 dark:text-green-400 dark:border-green-400/30 dark:bg-background">
-            <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600"></span>
-            </span>
-            Active
-        </Badge>
+
         <CardHeader>
             <CardTitle className="font-headline text-xl text-primary pr-24">{job.title}</CardTitle>
             <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
