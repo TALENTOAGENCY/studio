@@ -1,4 +1,7 @@
 
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { jobs, Job } from "@/lib/job-data";
 import { notFound } from 'next/navigation';
 import { Award, Briefcase, Building, Clock, DollarSign, ListChecks, MapPin, Network, Target, ArrowLeft } from "lucide-react";
@@ -43,6 +46,26 @@ const HiringProcessStep = ({ title, details, isLast = false }: { title: string, 
 
 export default function JobDetailPage({ params }: { params: { jobId: string } }) {
   const jobData = jobs.find(job => job.id === params.jobId);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsHeaderVisible(false);
+      } else {
+        setIsHeaderVisible(true);
+      }
+      setLastScrollY(currentScrollY < 0 ? 0 : currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
 
   if (!jobData) {
     notFound();
@@ -50,7 +73,7 @@ export default function JobDetailPage({ params }: { params: { jobId: string } })
 
   return (
     <div className="min-h-screen bg-background">
-       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b">
+       <header className={`sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b transition-transform duration-300 ease-in-out ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <a href="https://talento.agency/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
