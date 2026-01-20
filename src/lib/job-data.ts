@@ -683,6 +683,66 @@ const job10: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Data Engineering"
 };
 
+const job11: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "Software Quality Assurance Engineer",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
+    whatYouWillDo: [
+        "Analyze requirements and prepare detailed test cases, test plans, and scenarios.",
+        "Perform manual testing for web and mobile applications (iOS & Android).",
+        "Conduct API and Load testing.",
+        "Identify, log, and track defects, collaborating with developers for timely resolution.",
+        "Understand end-to-end data flow from backend (database/API) to frontend to identify potential bugs.",
+        "Design critical system-level test cases based on requirements and data flow.",
+        "Participate in regression, integration, and post-release testing.",
+        "Prepare test reports and communicate results to stakeholders.",
+        "Drive the QA process and manage priorities across multiple projects."
+    ],
+    highlightedSkills: ["Manual Testing", "API Testing", "Mobile App Testing", "Load Testing", "Test Case Design"],
+    otherSkills: ["Agile/Scrum", "JIRA", "Postman", "SQL", "Playwright"],
+    requiredSkills: [
+        "2-3 years of experience in manual, API, database, Load testing, and mobile app testing.",
+        "Strong understanding of SDLC, STLC, and defect lifecycle.",
+        "Ability to analyze requirements and design critical system-level test cases.",
+        "Strong problem-solving skills, self-driven, with product awareness and user-focused testing mindset.",
+        "Skilled in bug advocacy, ensuring defects are accurately identified, prioritized, and clearly communicated.",
+        "Experience in test case preparation, defect reporting, and test reporting.",
+        "Agile/Scrum experience."
+    ],
+    kpis: [
+        "Quality and coverage of test cases.",
+        "Accuracy and clarity of defect reporting.",
+        "Timely execution of testing cycles.",
+        "Effective collaboration with development teams."
+    ],
+    workHours: [
+        "Full-time position",
+        "Location: Onsite"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor's degree in a related field or equivalent practical experience.",
+    salary: "Up to 55,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Partially subsidized lunch",
+        "Complimentary snacks and coffee",
+        "2 weekly holidays",
+        "Games & recreation facilities",
+        "Flexible work environment",
+        "Performance-based bonuses",
+        "Quarterly team events",
+        "Corporate discounts"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Interview", details: "A deep dive into your SQA expertise and problem-solving skills." },
+        { title: "Final Interview", details: "A final conversation with leadership to ensure a great fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Onsite)",
+    employmentType: "Full-Time",
+    department: "Quality Assurance"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
@@ -704,6 +764,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job11,
+        id: "ta1542",
+        fullDescription: buildFullDescription(job11)
+    },
     {
         ...job10,
         id: "ta1541",
