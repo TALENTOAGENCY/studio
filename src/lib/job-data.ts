@@ -420,6 +420,67 @@ const job6: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Infrastructure"
 };
 
+const job7: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "Senior AI Engineer",
+    description: "We are looking for a highly experienced Senior AI Engineer with deep expertise in machine learning, large language models, vector databases, and modern MLOps practices.",
+    whatYouWillDo: [
+        "Design, develop, and deploy scalable AI systems",
+        "Build and lead the AI engineering team",
+        "Define best practices across data, ML, and deployment workflows",
+        "Work with cross-functional teams to ship production-grade AI features",
+        "Mentor junior engineers",
+        "Drive architecture decisions for cloud-based and enterprise AI systems"
+    ],
+    highlightedSkills: ["Python", "TensorFlow", "PyTorch", "LLMs", "Pinecone", "AWS SageMaker", "Docker", "Kubernetes"],
+    otherSkills: ["Node.js", "TypeScript", "Conversational AI", "Graph Databases", "AIOps", "REST APIs", "scikit-learn", "Weaviate", "Chroma", "Azure ML", "GCP AI Platform"],
+    requiredSkills: [
+        "Bachelor’s/Master’s degree in CS, ML, AI, or related field",
+        "5+ years of experience building & deploying production AI/ML systems",
+        "Strong Python expertise + ML frameworks: TensorFlow, PyTorch, scikit-learn",
+        "Experience with LLMs (OpenAI, Claude, or open-source models)",
+        "Hands-on experience with vector DBs: Pinecone, Weaviate, Chroma",
+        "Experience with cloud AI platforms: AWS SageMaker, Azure ML, GCP AI Platform",
+        "Knowledge of MLOps: model versioning, monitoring, deployment",
+        "Experience integrating AI systems with REST APIs",
+        "Strong with Docker & Kubernetes",
+        "Understanding of data engineering & large-scale data handling"
+    ],
+    kpis: [
+        "Quality and scalability of deployed AI systems.",
+        "Performance and growth of the AI engineering team.",
+        "Successful integration of AI features into production.",
+        "Impact of mentorship on junior engineers."
+    ],
+    workHours: [
+        "Full-time position",
+        "Dhaka (Onsite/Hybrid)"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor’s/Master’s degree in CS, ML, AI, or related field",
+    salary: "Up to 2,00,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Complimentary snacks and coffee",
+        "Partially Subsidized lunch",
+        "2 weekly holidays",
+        "Games & entertainment facilities",
+        "Flexible work environment",
+        "Performance-based bonus",
+        "Quarterly events and celebrations",
+        "Corporate Discounts"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Deep-Dive", details: "A session focusing on your AI/ML expertise and hands-on skills." },
+        { title: "System Design & Architecture", details: "A round to evaluate your approach to designing scalable AI systems." },
+        { title: "Final Leadership Interview", details: "A final conversation to ensure a great cultural and team fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Onsite/Hybrid)",
+    employmentType: "Full-Time",
+    department: "AI & Machine Learning"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
@@ -441,6 +502,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job7,
+        id: "ta1538",
+        fullDescription: buildFullDescription(job7)
+    },
     {
         ...job6,
         id: "ta1537",
