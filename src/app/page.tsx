@@ -1,8 +1,7 @@
-
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Briefcase, Building, Code, MapPin, Receipt } from "lucide-react";
+import React, { useState, useEffect, useMemo } from "react";
+import { Briefcase, Building, Code, MapPin, Receipt, SlidersHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,6 +10,18 @@ import { jobs, Job } from "@/lib/job-data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShareJobButton } from "@/components/job/ShareJobButton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 const JobListItem = ({ job }: { job: Job }) => (
   <Card className="hover:shadow-lg transition-shadow flex flex-col">
@@ -43,9 +54,20 @@ const JobListItem = ({ job }: { job: Job }) => (
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(jobs);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const filterOptions = useMemo(() => {
+    const departments = [...new Set(jobs.map(job => job.department))].sort();
+    const locations = [...new Set(jobs.map(job => job.workplace))].sort();
+    const types = [...new Set(jobs.map(job => job.employmentType))].sort();
+    return { departments, locations, types };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,20 +90,34 @@ export default function Home() {
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = jobs.filter(job => {
-      const { title, description, highlightedSkills, otherSkills } = job;
-      return (
-        title.toLowerCase().includes(lowercasedQuery) ||
-        description.toLowerCase().includes(lowercasedQuery) ||
-        highlightedSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery)) ||
-        otherSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery))
-      );
+      const searchMatch =
+        !lowercasedQuery ||
+        job.title.toLowerCase().includes(lowercasedQuery) ||
+        job.description.toLowerCase().includes(lowercasedQuery) ||
+        job.highlightedSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery)) ||
+        job.otherSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery));
+      
+      const departmentMatch = !selectedDepartment || job.department === selectedDepartment;
+      const locationMatch = !selectedLocation || job.workplace === selectedLocation;
+      const typeMatch = !selectedType || job.employmentType === selectedType;
+
+      return searchMatch && departmentMatch && locationMatch && typeMatch;
     });
     setFilteredJobs(filtered);
-  }, [searchQuery]);
+  }, [searchQuery, selectedDepartment, selectedLocation, selectedType]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
+  
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedDepartment("");
+    setSelectedLocation("");
+    setSelectedType("");
+  };
+
+  const hasActiveFilters = !!(selectedDepartment || selectedLocation || selectedType);
 
   return (
     <div className="min-h-screen bg-background">
@@ -104,14 +140,61 @@ export default function Home() {
              <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary"> Find Your Next Opportunity</h1>
              <p className="text-lg text-muted-foreground">We connect talented developers with innovative companies changing the world.</p>
           </div>
-          <div className="mb-8 relative">
-            <Code className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input 
-              placeholder="Search by keyword (e.g., React, Node JS)" 
-              className="pl-10"
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
+          
+          <div className="mb-8 space-y-4">
+            <div className="relative">
+              <Code className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Input 
+                placeholder="Search by keyword (e.g., React, Node JS)" 
+                className="pl-10"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+            </div>
+            
+            <Collapsible className="space-y-2">
+              <CollapsibleTrigger asChild>
+                <Button variant="outline" className="w-full justify-center">
+                  <SlidersHorizontal className="h-4 w-4 mr-2" />
+                  Filter Jobs
+                  {hasActiveFilters && <span className="ml-2 h-2 w-2 rounded-full bg-accent" />}
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up overflow-hidden">
+                <div className="border p-4 rounded-lg">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+                      <SelectTrigger><SelectValue placeholder="All Departments" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All Departments</SelectItem>
+                        {filterOptions.departments.map(dep => <SelectItem key={dep} value={dep}>{dep}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+
+                    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                      <SelectTrigger><SelectValue placeholder="All Locations" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All Locations</SelectItem>
+                        {filterOptions.locations.map(loc => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                    
+                    <Select value={selectedType} onValueChange={setSelectedType}>
+                      <SelectTrigger><SelectValue placeholder="All Types" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All Types</SelectItem>
+                        {filterOptions.types.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  {hasActiveFilters && (
+                    <Button variant="ghost" onClick={clearFilters} className="w-full mt-4 text-muted-foreground hover:text-foreground">
+                      Clear All Filters
+                    </Button>
+                  )}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
           
           <div className="space-y-6">
@@ -120,7 +203,10 @@ export default function Home() {
                   <JobListItem key={job.id} job={job} />
               ))
             ) : (
-                <p className="text-center text-muted-foreground">No jobs found matching your search.</p>
+                <Card className="text-center p-8">
+                  <p className="text-muted-foreground">No jobs found matching your criteria.</p>
+                  {hasActiveFilters && <Button variant="link" onClick={clearFilters} className="mt-2">Clear all filters</Button>}
+                </Card>
             )}
           </div>
 
