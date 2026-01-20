@@ -348,6 +348,78 @@ const job5: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Engineering"
 };
 
+const job6: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "DevOps & Infrastructure Engineer",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
+    whatYouWillDo: [
+        "Design, deploy, and manage AWS cloud infrastructure",
+        "Build and maintain CI/CD pipelines (GitHub Actions / GitLab CI / CircleCI)",
+        "Manage containerization using Docker",
+        "Implement Infrastructure as Code using Terraform",
+        "Set up monitoring & alerting with tools like Prometheus, Grafana, Sentry, Datadog",
+        "Maintain Linux/Unix servers and system administration tasks",
+        "Write automation scripts using Bash / Shell / Python",
+        "Manage logs, performance analysis, and observability systems",
+        "Work with networking, security, and system hardening",
+        "Support backend teams (Node.js / Nest.js / Fast API)",
+        "Collaborate with engineering teams to ensure smooth, automated delivery"
+    ],
+    highlightedSkills: ["AWS", "Docker", "Terraform", "CI/CD", "Python", "Bash", "Linux"],
+    otherSkills: ["Git", "GitOps", "Prometheus", "Grafana", "Serverless", "SST.dev", "AWS CDK", "Node.js", "Next.js", "Fast API", "MLOps", "Microservices"],
+    requiredSkills: [
+        "3–5 years of hands-on DevOps experience",
+        "Strong in AWS Cloud Services & Architecture",
+        "Solid experience with Docker and container workflows",
+        "Strong Terraform knowledge for infra automation",
+        "Experience with CI/CD tools (GitHub Actions, GitLab, CircleCI)",
+        "Comfortable with Linux administration",
+        "Strong scripting with Python / Bash",
+        "Familiarity with Git & GitOps workflows",
+        "Experience managing databases, backups, and migrations",
+        "Understanding of networking, VPCs, firewalls, security groups",
+        "Experience with monitoring tools (Prometheus, Grafana, etc.)",
+        "Experience with Serverless (SST.dev / AWS CDK) is a huge plus",
+        "Experience with Node.js / Next.js / Fast API is a huge plus",
+        "Deploying automated testing pipelines is a huge plus",
+        "MLOps / AgentOps exposure is a huge plus",
+        "Experience with SOA and microservices architecture is a huge plus"
+    ],
+    kpis: [
+        "Infrastructure uptime and reliability.",
+        "CI/CD pipeline efficiency and speed.",
+        "Automation of manual processes.",
+        "Security and compliance of the infrastructure."
+    ],
+
+    workHours: [
+        "Full-time position",
+        "Flexible work environment"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor's degree in Computer Science or a related field, or equivalent practical experience.",
+    salary: "Up to 100,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Partially subsidized lunch",
+        "Unlimited tea, snacks & coffee",
+        "Two weekly holidays",
+        "In-office games & recreation",
+        "Flexible work culture",
+        "Performance-based bonuses",
+        "Quarterly team events",
+        "Corporate discounts"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Interview", details: "A deep dive into your DevOps knowledge and systems thinking." },
+        { title: "Final Interview", details: "A final conversation with leadership to ensure a great fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Hybrid)",
+    employmentType: "Full-Time",
+    department: "Infrastructure"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
@@ -369,6 +441,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job6,
+        id: "ta1537",
+        fullDescription: buildFullDescription(job6)
+    },
     {
         ...job5,
         id: "ta1536",
