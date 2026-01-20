@@ -59,6 +59,8 @@ export default function Home() {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [selectedExperience, setSelectedExperience] = useState("");
+  const [selectedSalary, setSelectedSalary] = useState("");
   
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(jobs);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -68,8 +70,17 @@ export default function Home() {
     const departments = [...new Set(jobs.map(job => job.department))].sort();
     const locations = [...new Set(jobs.map(job => job.workplace))].sort();
     const types = [...new Set(jobs.map(job => job.employmentType))].sort();
-    return { departments, locations, types };
+    const experienceLevels = [...new Set(jobs.map(job => job.experienceLevel))].filter(Boolean).sort();
+    return { departments, locations, types, experienceLevels };
   }, []);
+
+  const salaryBrackets = [
+    { label: "Any", value: "" },
+    { label: "Up to 60k", value: "0-60000" },
+    { label: "60k - 100k", value: "60000-100000" },
+    { label: "100k - 200k", value: "100000-200000" },
+    { label: "200k+", value: "200000-Infinity" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,11 +113,25 @@ export default function Home() {
       const departmentMatch = !selectedDepartment || job.department === selectedDepartment;
       const locationMatch = !selectedLocation || job.workplace === selectedLocation;
       const typeMatch = !selectedType || job.employmentType === selectedType;
+      const experienceMatch = !selectedExperience || job.experienceLevel === selectedExperience;
 
-      return searchMatch && departmentMatch && locationMatch && typeMatch;
+      const salaryMatch = !selectedSalary || (() => {
+          if (!job.salaryMin && !job.salaryMax) return false;
+
+          const [filterMin, filterMax] = selectedSalary.split('-').map(s => s === 'Infinity' ? Infinity : Number(s));
+
+          const jobMin = job.salaryMin ?? job.salaryMax;
+          const jobMax = job.salaryMax ?? job.salaryMin;
+
+          if (!jobMin || !jobMax) return false;
+
+          return jobMin < filterMax && jobMax >= filterMin;
+      })();
+
+      return searchMatch && departmentMatch && locationMatch && typeMatch && experienceMatch && salaryMatch;
     });
     setFilteredJobs(filtered);
-  }, [searchQuery, selectedDepartment, selectedLocation, selectedType]);
+  }, [searchQuery, selectedDepartment, selectedLocation, selectedType, selectedExperience, selectedSalary]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -116,9 +141,11 @@ export default function Home() {
     setSelectedDepartment("");
     setSelectedLocation("");
     setSelectedType("");
+    setSelectedExperience("");
+    setSelectedSalary("");
   };
 
-  const hasActiveFilters = !!(selectedDepartment || selectedLocation || selectedType);
+  const hasActiveFilters = !!(selectedDepartment || selectedLocation || selectedType || selectedExperience || selectedSalary);
 
   return (
     <div className="min-h-screen bg-background">
@@ -213,6 +240,34 @@ export default function Home() {
                             <div key={type} className="flex items-center space-x-2">
                               <RadioGroupItem value={type} id={`type-${type}`} />
                               <Label htmlFor={`type-${type}`} className="font-normal">{type}</Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </div>
+
+                       <div>
+                        <Label className="text-base font-semibold text-foreground">Experience Level</Label>
+                        <RadioGroup value={selectedExperience} onValueChange={setSelectedExperience} className="mt-2 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="" id="exp-all" />
+                            <Label htmlFor="exp-all" className="font-normal">All Levels</Label>
+                          </div>
+                          {filterOptions.experienceLevels.map(level => (
+                            <div key={level} className="flex items-center space-x-2">
+                              <RadioGroupItem value={level} id={`exp-${level}`} />
+                              <Label htmlFor={`exp-${level}`} className="font-normal">{level}</Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </div>
+
+                      <div>
+                        <Label className="text-base font-semibold text-foreground">Salary Range (BDT)</Label>
+                        <RadioGroup value={selectedSalary} onValueChange={setSelectedSalary} className="mt-2 space-y-1">
+                          {salaryBrackets.map(bracket => (
+                            <div key={bracket.value} className="flex items-center space-x-2">
+                              <RadioGroupItem value={bracket.value} id={`sal-${bracket.value}`} />
+                              <Label htmlFor={`sal-${bracket.value}`} className="font-normal">{bracket.label}</Label>
                             </div>
                           ))}
                         </RadioGroup>

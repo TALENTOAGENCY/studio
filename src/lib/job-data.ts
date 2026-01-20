@@ -12,6 +12,9 @@ export interface Job {
     otherDuties: string;
     education: string;
     salary: string;
+    salaryMin: number | null;
+    salaryMax: number | null;
+    experienceLevel: string;
     benefits: string[];
     hiringProcess: { title: string; details: string; }[];
     fullDescription: string;
@@ -20,7 +23,7 @@ export interface Job {
     department: string;
 }
 
-const job1: Omit<Job, 'id' | 'fullDescription'> = {
+const job1: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Senior Software Engineer [Full Stack]",
     description: "Our client—a top US onsite work marketplace—is searching for skilled developers to join their global engineering team. Build technology that genuinely improves lives while delivering exceptional service. Thrive in a fast-paced environment where your ideas matter and collaboration fuels success. Work with outstanding professionals in a culture that champions learning, growth, and innovation. Passionate about development? Excited by meaningful challenges? Apply below and join a rapidly growing team.",
     whatYouWillDo: [
@@ -91,7 +94,7 @@ const job1: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Engineering"
 };
 
-const job2: Omit<Job, 'id' | 'fullDescription'> = {
+const job2: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Staff Software Engineer",
     description: `Our client—a top US onsite work marketplace—is searching for skilled developers to join their global engineering team. 
 Build technology that genuinely improves lives while delivering exceptional service.
@@ -166,7 +169,7 @@ Passionate about development? Excited by meaningful challenges? Apply below and 
     department: "Engineering"
 };
 
-const job3: Omit<Job, 'id' | 'fullDescription'> = {
+const job3: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Director, Service Delivery",
     description: `TALENTO is thrilled to source top Bangladeshi marketing service delivery talent for our client — a premier North American offshore marketing agency powering global SMBs.
 
@@ -236,7 +239,7 @@ Reporting to the COO, you'll engineer bulletproof delivery cadence and scalable 
     department: "Service Delivery"
 };
 
-const job4: Omit<Job, 'id' | 'fullDescription'> = {
+const job4: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Senior Software Engineer (Fullstack)",
     description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
@@ -294,7 +297,7 @@ const job4: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Engineering"
 };
 
-const job5: Omit<Job, 'id' | 'fullDescription'> = {
+const job5: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Software Engineer (Fullstack)",
     description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
@@ -348,7 +351,7 @@ const job5: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Engineering"
 };
 
-const job6: Omit<Job, 'id' | 'fullDescription'> = {
+const job6: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "DevOps & Infrastructure Engineer",
     description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
@@ -420,7 +423,7 @@ const job6: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Infrastructure"
 };
 
-const job7: Omit<Job, 'id' | 'fullDescription'> = {
+const job7: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Senior AI Engineer",
     description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
@@ -481,7 +484,7 @@ const job7: Omit<Job, 'id' | 'fullDescription'> = {
     department: "AI & Machine Learning"
 };
 
-const job8: Omit<Job, 'id' | 'fullDescription'> = {
+const job8: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "AI Engineer",
     description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
@@ -545,7 +548,7 @@ const job8: Omit<Job, 'id' | 'fullDescription'> = {
     department: "AI & Machine Learning"
 };
 
-const job9: Omit<Job, 'id' | 'fullDescription'> = {
+const job9: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "React Native Developer",
     description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
@@ -623,7 +626,7 @@ const job9: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Mobile Engineering"
 };
 
-const job10: Omit<Job, 'id' | 'fullDescription'> = {
+const job10: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Data Engineer",
     description: "We’re looking for a Data Engineer to manage and optimize our data infrastructure, pipelines, and reporting dashboards. You will ensure secure access, reliable data ingestion, and accurate analytics to support business and digital marketing decisions. This role is perfect for someone who enjoys building robust data workflows, automating processes, and enhancing reporting systems.",
     whatYouWillDo: [
@@ -683,7 +686,7 @@ const job10: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Data Engineering"
 };
 
-const job11: Omit<Job, 'id' | 'fullDescription'> = {
+const job11: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Software Quality Assurance Engineer",
     description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
@@ -744,7 +747,7 @@ const job11: Omit<Job, 'id' | 'fullDescription'> = {
 };
 
 
-const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
+const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription' | 'experienceLevel' | 'salaryMin' | 'salaryMax'>) => {
     return `
 Job Title: ${job.title}
 
@@ -767,56 +770,89 @@ export const jobs: Job[] = [
     {
         ...job11,
         id: "ta1542",
-        fullDescription: buildFullDescription(job11)
+        fullDescription: buildFullDescription(job11),
+        experienceLevel: "Entry-level",
+        salaryMin: null,
+        salaryMax: 55000,
     },
     {
         ...job10,
         id: "ta1541",
-        fullDescription: buildFullDescription(job10)
+        fullDescription: buildFullDescription(job10),
+        experienceLevel: "Mid-level",
+        salaryMin: null,
+        salaryMax: 150000,
     },
     {
         ...job9,
         id: "ta1540",
-        fullDescription: buildFullDescription(job9)
+        fullDescription: buildFullDescription(job9),
+        experienceLevel: "Mid-level",
+        salaryMin: null,
+        salaryMax: 100000,
     },
     {
         ...job8,
         id: "ta1539",
-        fullDescription: buildFullDescription(job8)
+        fullDescription: buildFullDescription(job8),
+        experienceLevel: "Mid-level",
+        salaryMin: null,
+        salaryMax: 90000,
     },
     {
         ...job7,
         id: "ta1538",
-        fullDescription: buildFullDescription(job7)
+        fullDescription: buildFullDescription(job7),
+        experienceLevel: "Senior-level",
+        salaryMin: null,
+        salaryMax: 200000,
     },
     {
         ...job6,
         id: "ta1537",
-        fullDescription: buildFullDescription(job6)
+        fullDescription: buildFullDescription(job6),
+        experienceLevel: "Mid-level",
+        salaryMin: null,
+        salaryMax: 100000,
     },
     {
         ...job5,
         id: "ta1536",
-        fullDescription: buildFullDescription(job5)
+        fullDescription: buildFullDescription(job5),
+        experienceLevel: "Mid-level",
+        salaryMin: null,
+        salaryMax: 90000,
     },
     {
         ...job4,
         id: "ta1535",
-        fullDescription: buildFullDescription(job4)
+        fullDescription: buildFullDescription(job4),
+        experienceLevel: "Senior-level",
+        salaryMin: null,
+        salaryMax: 150000,
     },
     {
         ...job3,
         id: "ta1534",
-        fullDescription: buildFullDescription(job3)
+        fullDescription: buildFullDescription(job3),
+        experienceLevel: "Director",
+        salaryMin: 200000,
+        salaryMax: 400000,
     },
     {
         ...job1,
         id: "ta1532",
-        fullDescription: buildFullDescription(job1)
+        fullDescription: buildFullDescription(job1),
+        experienceLevel: "Senior-level",
+        salaryMin: null,
+        salaryMax: null,
     },
     {
         ...job2,
         id: "ta1533",
-        fullDescription: buildFullDescription(job2)
+        fullDescription: buildFullDescription(job2),
+        experienceLevel: "Senior-level",
+        salaryMin: null,
+        salaryMax: null,
     }
 ];
