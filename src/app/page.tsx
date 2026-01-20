@@ -12,17 +12,18 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShareJobButton } from "@/components/job/ShareJobButton";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 
 const JobListItem = ({ job }: { job: Job }) => (
   <Card className="hover:shadow-lg transition-shadow flex flex-col">
@@ -112,7 +113,6 @@ export default function Home() {
   };
   
   const clearFilters = () => {
-    setSearchQuery("");
     setSelectedDepartment("");
     setSelectedLocation("");
     setSelectedType("");
@@ -143,59 +143,92 @@ export default function Home() {
           </div>
           
           <div className="mb-8 space-y-4">
-            <div className="relative">
-              <Code className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input 
-                placeholder="Search by keyword (e.g., React, Node JS)" 
-                className="pl-10"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-            
-            <Collapsible className="space-y-2">
-              <CollapsibleTrigger asChild>
-                <Button variant="outline" className="w-full justify-center">
-                  <SlidersHorizontal className="h-4 w-4 mr-2" />
-                  Filter Jobs
-                  {hasActiveFilters && <span className="ml-2 h-2 w-2 rounded-full bg-accent" />}
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up overflow-hidden">
-                <div className="border p-4 rounded-lg">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <Select value={selectedDepartment} onValueChange={(value) => value === 'all' ? setSelectedDepartment('') : setSelectedDepartment(value)}>
-                      <SelectTrigger><SelectValue placeholder="All Departments" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Departments</SelectItem>
-                        {filterOptions.departments.map(dep => <SelectItem key={dep} value={dep}>{dep}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="relative w-full flex-grow">
+                <Code className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input 
+                  placeholder="Search by keyword (e.g., React, Node JS)" 
+                  className="pl-10"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" className="w-full sm:w-auto flex-shrink-0">
+                    <SlidersHorizontal className="h-4 w-4 mr-2" />
+                    Filter Jobs
+                    {hasActiveFilters && <span className="ml-2 h-2 w-2 rounded-full bg-accent" />}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="flex flex-col">
+                  <SheetHeader>
+                    <SheetTitle>Filter Jobs</SheetTitle>
+                    <SheetDescription>
+                      Refine your job search using the options below.
+                    </SheetDescription>
+                  </SheetHeader>
+                  <ScrollArea className="flex-grow pr-6 -mr-6">
+                    <div className="space-y-8 py-4">
+                      <div>
+                        <Label className="text-base font-semibold text-foreground">Department</Label>
+                        <RadioGroup value={selectedDepartment} onValueChange={setSelectedDepartment} className="mt-2 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="" id="dep-all" />
+                            <Label htmlFor="dep-all" className="font-normal">All Departments</Label>
+                          </div>
+                          {filterOptions.departments.map(dep => (
+                            <div key={dep} className="flex items-center space-x-2">
+                              <RadioGroupItem value={dep} id={`dep-${dep}`} />
+                              <Label htmlFor={`dep-${dep}`} className="font-normal">{dep}</Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </div>
 
-                    <Select value={selectedLocation} onValueChange={(value) => value === 'all' ? setSelectedLocation('') : setSelectedLocation(value)}>
-                      <SelectTrigger><SelectValue placeholder="All Locations" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Locations</SelectItem>
-                        {filterOptions.locations.map(loc => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    
-                    <Select value={selectedType} onValueChange={(value) => value === 'all' ? setSelectedType('') : setSelectedType(value)}>
-                      <SelectTrigger><SelectValue placeholder="All Types" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Types</SelectItem>
-                        {filterOptions.types.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  {hasActiveFilters && (
-                    <Button variant="ghost" onClick={clearFilters} className="w-full mt-4 text-muted-foreground hover:text-foreground">
-                      Clear All Filters
-                    </Button>
-                  )}
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
+                      <div>
+                        <Label className="text-base font-semibold text-foreground">Location</Label>
+                        <RadioGroup value={selectedLocation} onValueChange={setSelectedLocation} className="mt-2 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="" id="loc-all" />
+                            <Label htmlFor="loc-all" className="font-normal">All Locations</Label>
+                          </div>
+                          {filterOptions.locations.map(loc => (
+                            <div key={loc} className="flex items-center space-x-2">
+                              <RadioGroupItem value={loc} id={`loc-${loc}`} />
+                              <Label htmlFor={`loc-${loc}`} className="font-normal">{loc}</Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </div>
+
+                      <div>
+                        <Label className="text-base font-semibold text-foreground">Employment Type</Label>
+                        <RadioGroup value={selectedType} onValueChange={setSelectedType} className="mt-2 space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="" id="type-all" />
+                            <Label htmlFor="type-all" className="font-normal">All Types</Label>
+                          </div>
+                          {filterOptions.types.map(type => (
+                            <div key={type} className="flex items-center space-x-2">
+                              <RadioGroupItem value={type} id={`type-${type}`} />
+                              <Label htmlFor={`type-${type}`} className="font-normal">{type}</Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </div>
+                    </div>
+                  </ScrollArea>
+                  <SheetFooter>
+                    {hasActiveFilters && (
+                      <Button variant="ghost" onClick={clearFilters} className="w-full mt-4">
+                        Clear All Filters
+                      </Button>
+                    )}
+                  </SheetFooter>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
           
           <div className="space-y-6">
