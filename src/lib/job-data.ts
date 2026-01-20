@@ -233,16 +233,73 @@ Reporting to the COO, you'll engineer bulletproof delivery cadence and scalable 
     ],
     workplace: "Dhaka (Hybrid)",
     employmentType: "Fixed Term",
-    department: "Service Delivery",
+    department: "Service Delivery"
 };
+
+const job4: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "Senior Software Engineer (Fullstack)",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia. We're looking for an experienced Senior Software Engineer ready for technical leadership. This role involves setting engineering direction, solving problems, mentoring team members, and owning systems end-to-end.",
+    whatYouWillDo: [
+        "Designing and building core systems that are scalable, robust, and maintainable",
+        "Leading projects end-to-end, from design to release",
+        "Collaborating with product, design, and engineering teams to ship impactful features",
+        "Mentoring junior and mid-level developers — helping them grow technically",
+        "Monitoring technical debt, system performance, and long-term code health"
+    ],
+    highlightedSkills: ["React", "Next.js", "Node.js", "Django", "FastAPI", "AWS", "GCP", "PostgreSQL", "MySQL", "MongoDB"],
+    otherSkills: ["Firestore", "DynamoDB", "Redis", "Memcached", "Prisma", "TypeORM", "Sequelize", "GitHub Actions", "Jenkins", "Terraform", "Kafka", "RabbitMQ", "Pub/Sub", "System Design", "API Development"],
+    requiredSkills: [
+        "6–9 years of professional software engineering experience",
+        "Prior experience mentoring or guiding team members",
+        "Strong backend experience in modern languages/frameworks",
+        "Solid understanding of system design, API development, and both Relational & NoSQL databases",
+        "Flexibility to switch between tools/technologies based on project needs",
+        "Experience shipping features to production in a startup or fast-moving environment",
+        "Ability to take ownership and lead projects",
+        "Comfortable with frontend frameworks to contribute and collaborate with UI teams"
+    ],
+    kpis: [
+        "End-to-end project delivery timeliness and quality.",
+        "Scalability and robustness of designed systems.",
+        "Impact of mentorship on junior developers' growth.",
+        "Improvements in system performance and reduction of technical debt."
+    ],
+    workHours: [
+        "Full-time position",
+        "Flexible work environment"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor's degree in Computer Science or a related field, or equivalent practical experience.",
+    salary: "Up to 150,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Complimentary snacks and coffee",
+        "Partially Subsidized lunch",
+        "2 days off per week",
+        "Games & entertainment facilities",
+        "Flexible work environment",
+        "Performance-based bonus",
+        "Quarterly events and celebrations",
+        "Corporate Discounts"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Interview", details: "A deep dive into your technical expertise and problem-solving skills." },
+        { title: "System Design Round", details: "A session to understand your approach to building scalable and robust systems." },
+        { title: "Final Interview", details: "A final conversation with leadership to ensure a great fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Hybrid)",
+    employmentType: "Full-Time",
+    department: "Engineering"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
 Job Title: ${job.title}
 
 Description: ${job.description}
-
-What You Will Do: ${job.description}
 
 What You Will Do:
 ${job.whatYouWillDo.map(item => `- ${item}`).join('\n')}
@@ -259,8 +316,13 @@ Education: ${job.education}
 
 export const jobs: Job[] = [
     {
+        ...job4,
+        id: "ta1535",
+        fullDescription: buildFullDescription(job4)
+    },
+    {
         ...job3,
-        id: "ta1534",  // new unique ID
+        id: "ta1534",
         fullDescription: buildFullDescription(job3)
     },
     {
