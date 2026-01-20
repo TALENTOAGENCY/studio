@@ -238,7 +238,7 @@ Reporting to the COO, you'll engineer bulletproof delivery cadence and scalable 
 
 const job4: Omit<Job, 'id' | 'fullDescription'> = {
     title: "Senior Software Engineer (Fullstack)",
-    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia. We're looking for an experienced Senior Software Engineer ready for technical leadership. This role involves setting engineering direction, solving problems, mentoring team members, and owning systems end-to-end.",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
         "Designing and building core systems that are scalable, robust, and maintainable",
         "Leading projects end-to-end, from design to release",
