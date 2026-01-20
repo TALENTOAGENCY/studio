@@ -170,7 +170,7 @@ export default function Home() {
           </div>
           
           <div className="mb-8 space-y-4">
-            <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex flex-row items-center gap-2">
               <div className="relative w-full flex-grow">
                 <Code className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input 
@@ -182,9 +182,9 @@ export default function Home() {
               </div>
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="w-full sm:w-auto flex-shrink-0">
-                    <SlidersHorizontal className="h-4 w-4 mr-2" />
-                    Filter Jobs
+                  <Button variant="outline" className="flex-shrink-0">
+                    <SlidersHorizontal className="h-4 w-4" />
+                    <span className="hidden sm:inline ml-2">Filter Jobs</span>
                     {hasActiveFilters && <span className="ml-2 h-2 w-2 rounded-full bg-accent" />}
                   </Button>
                 </SheetTrigger>
