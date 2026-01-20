@@ -4,20 +4,10 @@ import { cn } from "@/lib/utils";
 export const TalentoLogo = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 400 100"
+    viewBox="0 0 260 100"
     {...props}
-    className={cn("w-full h-full", props.className)}
+    className={cn("h-full", props.className)}
   >
-    {/* Background rectangle */}
-    <rect
-      x="0"
-      y="0"
-      width="400"
-      height="100"
-      fill="#3b5f6f"
-      rx="8"
-    />
-    
     {/* Concentric circles pattern */}
     <g transform="translate(50, 50)">
       {/* Outer circle */}
@@ -26,7 +16,7 @@ export const TalentoLogo = (props: React.SVGProps<SVGSVGElement>) => (
         cy="0"
         r="25"
         fill="none"
-        stroke="white"
+        stroke="currentColor"
         strokeWidth="2"
       />
       {/* Middle circle */}
@@ -35,7 +25,7 @@ export const TalentoLogo = (props: React.SVGProps<SVGSVGElement>) => (
         cy="0"
         r="18"
         fill="none"
-        stroke="white"
+        stroke="currentColor"
         strokeWidth="1.5"
       />
       {/* Inner circle */}
@@ -44,7 +34,7 @@ export const TalentoLogo = (props: React.SVGProps<SVGSVGElement>) => (
         cy="0"
         r="12"
         fill="none"
-        stroke="white"
+        stroke="currentColor"
         strokeWidth="1"
       />
       {/* Center dot */}
@@ -52,34 +42,21 @@ export const TalentoLogo = (props: React.SVGProps<SVGSVGElement>) => (
         cx="0"
         cy="0"
         r="3"
-        fill="white"
+        fill="currentColor"
       />
     </g>
     
     {/* TALENTO text */}
     <text
-      x="100"
-      y="45"
+      x="95"
+      y="50"
       fontFamily="Arial, sans-serif"
       fontSize="32"
-      fill="white"
+      fill="currentColor"
       fontWeight="bold"
       dominantBaseline="middle"
     >
       TALENTO
-    </text>
-    
-    {/* SEAMLESS TALENT SOLUTIONS text */}
-    <text
-      x="100"
-      y="65"
-      fontFamily="Arial, sans-serif"
-      fontSize="10"
-      fill="white"
-      dominantBaseline="middle"
-      letterSpacing="0.5"
-    >
-      SEAMLESS TALENT SOLUTIONS.
     </text>
   </svg>
 );
