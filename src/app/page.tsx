@@ -4,13 +4,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Briefcase, Building, Code, MapPin, Receipt, SlidersHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import TalentoLogo from "@/components/icons/TalentoLogo";
 import { jobs, Job } from "@/lib/job-data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ShareJobButton } from "@/components/job/ShareJobButton";
 import {
   Sheet,
   SheetContent,
@@ -26,32 +25,35 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 
 const JobListItem = ({ job }: { job: Job }) => (
-  <Card className="hover:shadow-lg transition-shadow flex flex-col">
-    <CardHeader>
-      <CardTitle className="font-headline text-xl text-primary">{job.title}</CardTitle>
-      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-        <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {job.workplace}</div>
-        <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {job.employmentType}</div>
-        <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.department}</div>
-        <div className="flex items-center gap-1.5"><Receipt className="h-4 w-4" /> {job.salary}</div>
-      </div>
-    </CardHeader>
-    <CardContent className="flex-grow">
-      <p className="text-foreground/80 mb-4 line-clamp-2">{job.description}</p>
-      <div className="flex flex-wrap gap-2 mb-6">
-        {job.highlightedSkills.slice(0, 5).map(skill => (
-          <Badge key={skill} variant="secondary" className="font-normal">{skill}</Badge>
-        ))}
-        {job.highlightedSkills.length > 5 && <Badge variant="outline">+{job.highlightedSkills.length - 5} more</Badge>}
-      </div>
-    </CardContent>
-    <CardFooter className="flex justify-between items-center">
-      <Button asChild variant="outline">
-        <Link href={`/jobs/${job.id}`}>View Details</Link>
-      </Button>
-      <ShareJobButton job={job} />
-    </CardFooter>
-  </Card>
+  <Link href={`/jobs/${job.id}`} className="block group rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+    <Card className="relative hover:shadow-lg transition-shadow flex flex-col h-full group-hover:border-primary/50">
+        <Badge variant="outline" className="absolute top-4 right-4 z-10 flex items-center gap-1.5 text-green-600 border-green-600/30 bg-green-50 dark:text-green-400 dark:border-green-400/30 dark:bg-background">
+            <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600"></span>
+            </span>
+            Active
+        </Badge>
+        <CardHeader>
+            <CardTitle className="font-headline text-xl text-primary pr-24">{job.title}</CardTitle>
+            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {job.workplace}</div>
+                <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {job.employmentType}</div>
+                <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.department}</div>
+                <div className="flex items-center gap-1.5"><Receipt className="h-4 w-4" /> {job.salary}</div>
+            </div>
+        </CardHeader>
+        <CardContent className="flex-grow">
+            <p className="text-foreground/80 mb-4 line-clamp-2">{job.description}</p>
+            <div className="flex flex-wrap gap-2 mb-6">
+                {job.highlightedSkills.slice(0, 5).map(skill => (
+                <Badge key={skill} variant="secondary" className="font-normal">{skill}</Badge>
+                ))}
+                {job.highlightedSkills.length > 5 && <Badge variant="outline">+{job.highlightedSkills.length - 5} more</Badge>}
+            </div>
+        </CardContent>
+    </Card>
+  </Link>
 );
 
 export default function Home() {
