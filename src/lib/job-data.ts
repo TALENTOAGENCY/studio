@@ -294,6 +294,60 @@ const job4: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Engineering"
 };
 
+const job5: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "Software Engineer (Fullstack)",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
+    whatYouWillDo: [
+        "Build and maintain backend services using Node.js, Python, Java, or Go",
+        "Work with PostgreSQL, MySQL, MongoDB",
+        "Contribute to frontend development using React.js / Next.js when needed",
+        "Debug, test, and optimize backend systems",
+        "Collaborate with Product, QA, and Engineering Leads to deliver features on time"
+    ],
+    highlightedSkills: ["Node.js", "Python", "Java", "Go", "React.js", "Next.js", "PostgreSQL", "MySQL", "MongoDB"],
+    otherSkills: ["Express", "NestJS", "Django", "FastAPI", "Spring Boot", "Gin", "Fiber", "Unit Testing", "Integration Testing", "API Testing"],
+    requiredSkills: [
+        "3–5 years of professional experience",
+        "Strong in at least one backend framework: Node.js (Express / NestJS), Python (Django / FastAPI), Java (Spring Boot), Go (Gin / Fiber)",
+        "Comfortable with (or willing to learn) React.js / Next.js",
+        "Experience writing unit, integration, and API tests",
+        "Ability to switch between multiple stacks as required"
+    ],
+    kpis: [
+        "Reliable and timely delivery of features.",
+        "Quality of code measured by peer reviews and bug reports.",
+        "Effective collaboration with Product, QA, and Engineering teams.",
+        "Demonstrated growth and learning in new technologies.",
+    ],
+    workHours: [
+        "Full-time position",
+        "Flexible work environment"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor's degree in Computer Science or a related field, or equivalent practical experience.",
+    salary: "Up to 90,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Partially Subsidized lunch",
+        "Complimentary snacks and coffee",
+        "2 weekly holidays",
+        "Games & recreation facilities",
+        "Flexible work environment",
+        "Performance-based bonuses",
+        "Quarterly events and celebrations",
+        "Corporate Discounts"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Interview", details: "A deep dive into your technical expertise and problem-solving skills." },
+        { title: "Final Interview", details: "A final conversation with leadership to ensure a great fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Hybrid)",
+    employmentType: "Full-Time",
+    department: "Engineering"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
@@ -315,6 +369,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job5,
+        id: "ta1536",
+        fullDescription: buildFullDescription(job5)
+    },
     {
         ...job4,
         id: "ta1535",
