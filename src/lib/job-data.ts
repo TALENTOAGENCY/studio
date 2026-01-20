@@ -623,6 +623,66 @@ const job9: Omit<Job, 'id' | 'fullDescription'> = {
     department: "Mobile Engineering"
 };
 
+const job10: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "Data Engineer",
+    description: "We’re looking for a Data Engineer to manage and optimize our data infrastructure, pipelines, and reporting dashboards. You will ensure secure access, reliable data ingestion, and accurate analytics to support business and digital marketing decisions. This role is perfect for someone who enjoys building robust data workflows, automating processes, and enhancing reporting systems.",
+    whatYouWillDo: [
+        "Ensure proper app access and MFA for secure authentication",
+        "Optimize Snowflake views (change rollup view to union all tab views) for consistent reporting",
+        "Audit Fivetran connectors to validate active data flows",
+        "Update manual lead ingest process to reduce overhead",
+        "Troubleshoot and resolve lead ingest issues related to boolean fields",
+        "Configure Zapier and AWS S3 access",
+        "Validate automation workflows and system connections",
+        "Modify and enhance digital marketing dashboards: Verify metrics availability across sources, Update views to include new metrics, Incorporate new metrics into dashboards",
+        "Provide ad-hoc break/fix support and oversight",
+        "Address unplanned issues to ensure smooth operations"
+    ],
+    highlightedSkills: ["Power BI", "Snowflake", "AWS", "Fivetran", "SQL"],
+    otherSkills: ["Data Modeling", "Zapier", "AWS S3"],
+    requiredSkills: [
+        "Strong experience with Power BI (Must)",
+        "Strong experience with Snowflake (Must)",
+        "Knowledge of AWS and Fivetran (Good to have)",
+        "Strong SQL skills and data modeling expertise",
+        "Ability to troubleshoot data pipelines and ensure data accuracy",
+        "Experience collaborating with marketing, product, and engineering teams"
+    ],
+    kpis: [
+        "Ownership of assigned data pipelines and dashboards",
+        "Reliable and clear communication of issues and progress",
+        "Ability to debug, optimize, and maintain production workflows",
+        "Growth mindset and willingness to learn new tools and processes",
+        "Proactive problem-solving and attention to detail"
+    ],
+    workHours: [
+        "Full-time position"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor's degree in a related field or equivalent practical experience.",
+    salary: "Up to 150,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Partially subsidized lunch",
+        "Complimentary snacks and coffee",
+        "2 weekly holidays",
+        "Games & recreation facilities",
+        "Flexible work environment",
+        "Performance-based bonuses",
+        "Quarterly team events",
+        "Corporate discounts"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Interview", details: "A deep dive into your data engineering skills." },
+        { title: "Final Interview", details: "A final conversation with leadership to ensure a great fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Hybrid)",
+    employmentType: "Full-Time",
+    department: "Data Engineering"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
@@ -644,6 +704,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job10,
+        id: "ta1541",
+        fullDescription: buildFullDescription(job10)
+    },
     {
         ...job9,
         id: "ta1540",
