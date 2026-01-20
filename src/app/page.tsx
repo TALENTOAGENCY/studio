@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
@@ -163,26 +164,26 @@ export default function Home() {
               <CollapsibleContent className="data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up overflow-hidden">
                 <div className="border p-4 rounded-lg">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+                    <Select value={selectedDepartment} onValueChange={(value) => value === 'all' ? setSelectedDepartment('') : setSelectedDepartment(value)}>
                       <SelectTrigger><SelectValue placeholder="All Departments" /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Departments</SelectItem>
+                        <SelectItem value="all">All Departments</SelectItem>
                         {filterOptions.departments.map(dep => <SelectItem key={dep} value={dep}>{dep}</SelectItem>)}
                       </SelectContent>
                     </Select>
 
-                    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                    <Select value={selectedLocation} onValueChange={(value) => value === 'all' ? setSelectedLocation('') : setSelectedLocation(value)}>
                       <SelectTrigger><SelectValue placeholder="All Locations" /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Locations</SelectItem>
+                        <SelectItem value="all">All Locations</SelectItem>
                         {filterOptions.locations.map(loc => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
                       </SelectContent>
                     </Select>
                     
-                    <Select value={selectedType} onValueChange={setSelectedType}>
+                    <Select value={selectedType} onValueChange={(value) => value === 'all' ? setSelectedType('') : setSelectedType(value)}>
                       <SelectTrigger><SelectValue placeholder="All Types" /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Types</SelectItem>
+                        <SelectItem value="all">All Types</SelectItem>
                         {filterOptions.types.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
                       </SelectContent>
                     </Select>
