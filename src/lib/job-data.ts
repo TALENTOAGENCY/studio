@@ -422,7 +422,7 @@ const job6: Omit<Job, 'id' | 'fullDescription'> = {
 
 const job7: Omit<Job, 'id' | 'fullDescription'> = {
     title: "Senior AI Engineer",
-    description: "We are looking for a highly experienced Senior AI Engineer with deep expertise in machine learning, large language models, vector databases, and modern MLOps practices.",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
         "Design, develop, and deploy scalable AI systems",
         "Build and lead the AI engineering team",
@@ -462,7 +462,7 @@ const job7: Omit<Job, 'id' | 'fullDescription'> = {
         "Two annual festival bonuses",
         "Complimentary snacks and coffee",
         "Partially Subsidized lunch",
-        "2 weekly holidays",
+        "2 days off per week",
         "Games & entertainment facilities",
         "Flexible work environment",
         "Performance-based bonus",
@@ -483,7 +483,7 @@ const job7: Omit<Job, 'id' | 'fullDescription'> = {
 
 const job8: Omit<Job, 'id' | 'fullDescription'> = {
     title: "AI Engineer",
-    description: "We’re looking for an AI Engineer with strong ML fundamentals and hands-on experience building production-ready ML models.",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
         "Develop, train, and evaluate ML models on structured & unstructured datasets",
         "Build modular, versioned, reproducible training pipelines",
@@ -545,6 +545,84 @@ const job8: Omit<Job, 'id' | 'fullDescription'> = {
     department: "AI & Machine Learning"
 };
 
+const job9: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "React Native Developer",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
+    whatYouWillDo: [
+        "Develop, maintain, and enhance cross-platform mobile apps using React Native (TypeScript preferred)",
+        "Implement complex navigation flows, deep linking, and transitions using React Navigation",
+        "Collaborate with designers and backend teams to deliver smooth user experiences",
+        "Build modern UI using NativeWind (Tailwind for RN) or StyleSheet-based designs",
+        "Integrate REST APIs, OAuth, Firebase services, and third-party SDKs",
+        "Implement advanced animations using Reanimated & gesture-handler",
+        "Manage local storage using AsyncStorage and other persistence methods",
+        "Handle build processes using Xcode and Android Studio",
+        "Work with In-App Purchases (IAP) for both platforms",
+        "Optimize FlatList and virtualized list components for performance",
+        "Debug, identify, and fix performance and stability issues",
+        "Write clean, maintainable, and efficient code",
+        "Participate in code reviews and uphold development standards",
+        "Stay updated with the latest React Native tools, libraries, and trends"
+    ],
+    highlightedSkills: ["React Native", "TypeScript", "React Navigation", "Reanimated", "Xcode", "Android Studio", "Firebase"],
+    otherSkills: ["Redux Toolkit", "NativeWind", "Zod", "React Hook Form", "IAP", "Expo", "Git", "REST APIs"],
+    requiredSkills: [
+        "3–5 years of professional React Native development experience",
+        "Strong knowledge of JavaScript (ES6+), TypeScript, and core React concepts",
+        "Experience with React Navigation, routing, and deep linking",
+        "Solid understanding of state management: Redux Toolkit (RTK), RTK Query, or Context API",
+        "Proficiency with React Native Reanimated",
+        "Experience with React Hook Form + Zod or Formik + Yup",
+        "Understanding of mobile architecture & performance optimization",
+        "Experience with Firebase (FCM, OAuth, basic Firestore)",
+        "Strong experience with Xcode + Android Studio",
+        "Knowledge of AsyncStorage & local data management",
+        "Expertise in optimizing FlatList and large list rendering",
+        "Strong debugging and problem-solving skills",
+        "Experience with Git & collaborative workflows",
+        "Ability to work independently and meet deadlines",
+        "Experience with IAP integration",
+        "Familiarity with CI/CD pipelines for mobile apps",
+        "Experience publishing apps to App Store & Google Play",
+        "Understanding of UI/UX best practices",
+        "Experience with third-party SDK integrations",
+        "Experience with Expo (managed or bare workflow)"
+    ],
+    kpis: [
+        "Quality and performance of the mobile applications.",
+        "Timely delivery of features and updates.",
+        "Code quality, maintainability, and adherence to best practices.",
+        "Positive collaboration with design and backend teams."
+    ],
+    workHours: [
+        "Full-time position",
+        "Location: Onsite"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor's degree in Computer Science or a related field, or equivalent practical experience.",
+    salary: "Up to 1,00,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Complimentary snacks and coffee",
+        "Partially Subsidized lunch",
+        "2 days off per week",
+        "Games & entertainment facilities",
+        "Flexible work environment",
+        "Performance-based bonus",
+        "Quarterly events and celebrations",
+        "Corporate Discounts"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Interview", details: "A deep dive into your React Native expertise and problem-solving skills." },
+        { title: "Final Interview", details: "A final conversation with leadership to ensure a great fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Onsite)",
+    employmentType: "Full-Time",
+    department: "Mobile Engineering"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
@@ -566,6 +644,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job9,
+        id: "ta1540",
+        fullDescription: buildFullDescription(job9)
+    },
     {
         ...job8,
         id: "ta1539",
