@@ -481,6 +481,70 @@ const job7: Omit<Job, 'id' | 'fullDescription'> = {
     department: "AI & Machine Learning"
 };
 
+const job8: Omit<Job, 'id' | 'fullDescription'> = {
+    title: "AI Engineer",
+    description: "We’re looking for an AI Engineer with strong ML fundamentals and hands-on experience building production-ready ML models.",
+    whatYouWillDo: [
+        "Develop, train, and evaluate ML models on structured & unstructured datasets",
+        "Build modular, versioned, reproducible training pipelines",
+        "Support deployment of containerized models with REST-based inference APIs",
+        "Integrate MLOps tools such as MLflow, DVC for tracking and lifecycle management",
+        "Use n8n or similar tools to orchestrate workflow automations and data triggers",
+        "Collaborate with backend & infra teams for model serving and CI/CD",
+        "Design batch or real-time inference systems and work with feature stores",
+        "Monitor deployed models for drift, stability issues, and dataset shifts",
+        "Participate in sprint planning, technical discussions, and delivery checkpoints"
+    ],
+    highlightedSkills: ["Python", "TensorFlow", "PyTorch", "LLMs", "MLOps", "Docker", "Kubernetes", "GCP", "AWS"],
+    otherSkills: ["scikit-learn", "MLflow", "DVC", "n8n", "Pinecone", "Weaviate", "REST APIs"],
+    requiredSkills: [
+        "3–5 years of hands-on ML/AI experience",
+        "Bachelor’s in CSE (Open-source contributions or research publications preferred)",
+        "2–3 years building & deploying production ML systems",
+        "Strong Python skills + ML frameworks: TensorFlow, PyTorch, scikit-learn",
+        "Experience with cloud AI tooling: GCP (Vertex AI, Agent Engine, ADK), AWS (SageMaker, Bedrock, Q)",
+        "Experience with LLMs (OpenAI, Claude, etc.)",
+        "Experience with n8n or other automation/orchestration platforms",
+        "Hands-on with vector DBs: Pinecone, Weaviate, etc.",
+        "Solid MLOps fundamentals: versioning, monitoring, evaluation, deployment",
+        "Strong understanding of REST APIs, Docker, and Kubernetes",
+        "Good understanding of data engineering concepts & large datasets"
+    ],
+    kpis: [
+        "Quality and performance of developed ML models.",
+        "Efficiency and reliability of training and deployment pipelines.",
+        "Effective collaboration with backend and infrastructure teams.",
+        "Contribution to MLOps best practices."
+    ],
+    workHours: [
+        "Full-time position",
+        "Dhaka"
+    ],
+    otherDuties: "Please note this job description is not designed to cover or contain a comprehensive listing of activities, duties, or responsibilities required of the employee for this job. Duties, obligations, and activities may change at any time, with or without notice.",
+    education: "Bachelor’s in CSE (Open-source contributions or research publications preferred)",
+    salary: "Up to 90,000 BDT",
+    benefits: [
+        "Two annual festival bonuses",
+        "Complimentary snacks and coffee",
+        "Partially Subsidized lunch",
+        "2 days off per week",
+        "Games & entertainment facilities",
+        "Flexible work environment",
+        "Performance-based bonus",
+        "Quarterly events and celebrations",
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team to discuss your background and the role." },
+        { title: "Technical Interview", details: "A deep dive into your ML/AI expertise and problem-solving skills." },
+        { title: "System Design / Case Study", details: "A practical problem-solving session on a real-world scenario." },
+        { title: "Final Interview", details: "A final conversation with leadership to ensure a great fit." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka",
+    employmentType: "Full-Time",
+    department: "AI & Machine Learning"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription'>) => {
     return `
@@ -502,6 +566,11 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job8,
+        id: "ta1539",
+        fullDescription: buildFullDescription(job8)
+    },
     {
         ...job7,
         id: "ta1538",
