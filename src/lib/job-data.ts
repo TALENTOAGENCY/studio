@@ -746,6 +746,73 @@ const job11: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'e
     department: "Quality Assurance"
 };
 
+const job12: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
+    title: "Product Lead",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
+    whatYouWillDo: [
+        "Own a product area as a hands-on individual contributor, taking ambiguous problems from discovery and framing through delivery, launch, and iteration.",
+        "Manage and coach up to two Product Managers, serving as their local people manager and helping them strengthen problem framing, decision-making, execution, and communication.",
+        "Set and reinforce a high bar for product thinking and quality, modeling best practices through your own IC work and coaching others through real examples.",
+        "Help PMs move beyond stakeholder-driven execution, coaching them to form independent points of view grounded in user needs, data, and business impact.",
+        "Support PMs working across different product areas, providing guidance and perspective without acting as an approval or decision bottleneck.",
+        "Partner closely with Product Designers and Engineering Leads, ensuring strong collaboration, clear priorities, and effective delivery.",
+        "Align with US-based Product and Design Leadership, contributing local context, surfacing risks and tradeoffs, and supporting shared ownership models.",
+        "Establish strong local operating norms, including clear decision-making, documentation, retrospectives, and continuous improvement.",
+    ],
+    highlightedSkills: ["Product Management", "People Management", "B2B SaaS", "Marketplace", "Product Strategy", "Roadmap Planning"],
+    otherSkills: ["Problem Framing", "User Research", "Data Analysis", "Agile", "Scrum", "Mentorship"],
+    requiredSkills: [
+        "5+ years of experience in Product Management, with a strong track record shipping user-facing features (B2B SaaS and/or marketplace experience preferred).",
+        "Proven strength as an IC Product Manager, able to independently frame problems, make tradeoffs, and deliver outcomes.",
+        "Previous people management or mentorship experience, with a genuine interest in coaching and developing PMs.",
+        "Strong product judgment and independent point of view, comfortable making and explaining decisions under ambiguity.",
+        "Excellent problem framing skills, able to translate vague inputs into clear problems, solution directions, and success metrics.",
+        "Clear, concise communicator, with fluent spoken and written English and comfort working with US-based teams.",
+        "Dependable and outcome-oriented, able to drive progress through ambiguity, tight timelines, and competing priorities.",
+        "Experience working on distributed or global teams is a strong plus."
+    ],
+    kpis: [
+        "Product adoption and user engagement metrics.",
+        "Team performance and growth of managed PMs.",
+        "Successful delivery of product roadmap initiatives.",
+        "Quality of product specifications and problem framing.",
+    ],
+    workHours: [
+        "Working Days: Hybrid, Monday to Friday (3 days work from home + 2 days work from office)",
+        "Working Hours: 1:00 pm to 10:00 pm",
+        "Office Location: Uttara, Dhaka, Bangladesh (Hybrid)"
+    ],
+    otherDuties: "We may use artificial intelligence (AI) tools to support parts of the hiring process, such as reviewing applications, analyzing resumes, or assessing responses. These tools assist our recruitment team but do not replace human judgment. Final hiring decisions are ultimately made by humans. If you would like more information about how your data is processed, please contact us.",
+    education: "Not specified.",
+    salary: "BDT 285,000 - 350,000 (Monthly)",
+    benefits: [
+        "Mobile bill",
+        "Gym Membership",
+        "Medical Insurance",
+        "Festival bonus",
+        "Performance Reward Bonus",
+        "Gratuity benefit.",
+        "Lunch/Dinner Facilities: Fully Subsidized",
+        "Sound work-life balance - Regular working hours: 8 hours/day, 5 days a week.",
+        "Friendly work environment. Flexible leave/vacation policy.",
+        "A great learning opportunity.",
+        "Opportunity to work with cross-cultural teams with the USA.",
+        "Annual performance evaluation and increment.",
+        "Semi-annual reflection opportunities - because growth is the name of the game",
+        "Employee Drop Off - we’ve got your commute covered"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team." },
+        { title: "Product Sense & IC Skills Interview", details: "Deep dive into your product thinking and individual contributor capabilities." },
+        { title: "Leadership & Coaching Interview", details: "Discussion on your management style and experience coaching others." },
+        { title: "Final Interview", details: "A final conversation with leadership." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Hybrid)",
+    employmentType: "Full-time",
+    department: "Product"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription' | 'experienceLevel' | 'salaryMin' | 'salaryMax'>) => {
     return `
@@ -767,6 +834,14 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job12,
+        id: "ta1543",
+        fullDescription: buildFullDescription(job12),
+        experienceLevel: "Senior-level",
+        salaryMin: 285000,
+        salaryMax: 350000,
+    },
     {
         ...job11,
         id: "ta1542",
