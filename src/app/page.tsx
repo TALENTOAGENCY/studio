@@ -24,7 +24,7 @@ import AppHeader from "@/components/AppHeader";
 
 
 const JobListItem = ({ job }: { job: Job }) => (
-  <Link href={`/jobs/${job.id}`} className="block group rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+  <Link href={`/jobs/${job.id}`} className="block group rounded-lg focus:outline-none">
     <Card className="relative hover:shadow-lg transition-shadow flex flex-col h-full group-hover:border-primary/50">
 
         <CardHeader>
