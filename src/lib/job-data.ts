@@ -748,7 +748,7 @@ const job11: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'e
 
 const job12: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Product Lead",
-    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
+    description: "TALENTO is seeking a seasoned Product Lead to drive innovation for one of its clients—an established US-based Product Company. Step into a global engineering team that’s fast-paced, idea-driven, and growth-focused.",
     whatYouWillDo: [
         "Own a product area as a hands-on individual contributor, taking ambiguous problems from discovery and framing through delivery, launch, and iteration.",
         "Manage and coach up to two Product Managers, serving as their local people manager and helping them strengthen problem framing, decision-making, execution, and communication.",
