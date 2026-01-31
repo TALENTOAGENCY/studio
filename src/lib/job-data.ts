@@ -748,7 +748,7 @@ const job11: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'e
 
 const job12: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
     title: "Product Lead",
-    description: "TALENTO is seeking a seasoned Product Lead to drive innovation for one of its clients—an established US-based Product Company. Step into a global engineering team that’s fast-paced, idea-driven, and growth-focused.",
+    description: "TALENTO is sourcing for a Dhaka-rooted global outsourcing giant with offices across USA, Canada, and Australia, and support through specialized team augmentation in software, apps, design, AI, blockchain, cloud, security, and analytics.",
     whatYouWillDo: [
         "Own a product area as a hands-on individual contributor, taking ambiguous problems from discovery and framing through delivery, launch, and iteration.",
         "Manage and coach up to two Product Managers, serving as their local people manager and helping them strengthen problem framing, decision-making, execution, and communication.",
@@ -813,6 +813,68 @@ const job12: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'e
     department: "Product"
 };
 
+const job13: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
+    title: "Product Manager",
+    description: "TALENTO is seeking a seasoned Product Lead to drive innovation for one of its clients—an established US-based Product Company. Step into a global engineering team that’s fast-paced, idea-driven, and growth-focused.",
+    whatYouWillDo: [
+        "Identify and own high-impact user problems, deeply understanding workflows, constraints, and outcomes to produce clear problem statements, prioritized use cases, and measurable success metrics grounded in research, data, and internal expertise.",
+        "Lead feature development end to end, from concept through launch, making thoughtful tradeoffs that balance speed, quality, and impact in close partnership with design and engineering.",
+        "Partner with Product Marketing on go-to-market execution, ensuring features are clearly positioned, effectively launched, and well adopted by users.",
+        "Measure and evaluate impact post-launch, analyzing feature usage and outcomes to determine what’s working, what isn’t, and where iteration is needed.",
+        "Collaborate with Product Leads on roadmap planning, contributing input and recommendations to longer-range plans within your product area."
+    ],
+    highlightedSkills: ["Product Management", "B2B SaaS", "Agile", "Roadmap Planning", "Go-to-market"],
+    otherSkills: ["Problem Framing", "User Research", "Data Analysis", "Scrum", "Mentorship"],
+    requiredSkills: [
+        "3+ years of Product Management experience shipping user-facing features (ideally in a marketplace or B2B SaaS environment)",
+        "Strong learning mindset with the ability to ask good questions, listen deeply, and pursue truth over assumptions.",
+        "Strong product judgment, capable of making sound decisions under ambiguity by weighing tradeoffs, incomplete data, and real-world constraints.",
+        "Independent point of view, able to form and clearly articulate a well-reasoned perspective rather than defaulting to stakeholder requests or consensus.",
+        "Exceptional communicator, able to convey ideas clearly and concisely in both spoken and written English.",
+        "Strong ownership mindset, comfortable driving progress through ambiguity, tight timelines, and competing priorities.",
+        "Experience working on distributed or global teams is a strong plus"
+    ],
+    kpis: [
+        "Clarity and impact of problem statements and success metrics.",
+        "Successful end-to-end delivery of features, balancing speed and quality.",
+        "Effectiveness of go-to-market execution and feature adoption rates.",
+        "Quality of post-launch analysis and data-driven iteration decisions."
+    ],
+    workHours: [
+        "Working Days: Hybrid, Monday to Friday (3 days work from home + 2 days work from office)",
+        "Working Hours: 1:00 pm to 10:00 pm",
+        "Office Location: Uttara, Dhaka, Bangladesh (Hybrid)"
+    ],
+    otherDuties: "We may use artificial intelligence (AI) tools to support parts of the hiring process, such as reviewing applications, analyzing resumes, or assessing responses. These tools assist our recruitment team but do not replace human judgment. Final hiring decisions are ultimately made by humans. If you would like more information about how your data is processed, please contact us.",
+    education: "Not specified.",
+    salary: "BDT 220,000 - 285,000 (Monthly)",
+    benefits: [
+        "Mobile bill",
+        "Gym Membership",
+        "Medical Insurance",
+        "Festival bonus",
+        "Performance Reward Bonus",
+        "Gratuity benefit.",
+        "Lunch/Dinner Facilities: Fully Subsidized",
+        "Sound work-life balance - Regular working hours: 8 hours/day, 5 days a week.",
+        "Friendly work environment. Flexible leave/vacation policy.",
+        "A great learning opportunity.",
+        "Opportunity to work with cross-cultural teams with the USA.",
+        "Annual performance evaluation and increment.",
+        "Semi-annual reflection opportunities - because growth is the name of the game",
+        "Employee Drop Off - we’ve got your commute covered"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team." },
+        { title: "Product Sense & IC Skills Interview", details: "Deep dive into your product thinking and individual contributor capabilities." },
+        { title: "Final Interview", details: "A final conversation with leadership." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Hybrid)",
+    employmentType: "Full-time",
+    department: "Product"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription' | 'experienceLevel' | 'salaryMin' | 'salaryMax'>) => {
     return `
@@ -834,6 +896,14 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job13,
+        id: "ta1544",
+        fullDescription: buildFullDescription(job13),
+        experienceLevel: "Mid-level",
+        salaryMin: 220000,
+        salaryMax: 285000,
+    },
     {
         ...job12,
         id: "ta1543",
