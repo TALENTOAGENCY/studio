@@ -1,23 +1,17 @@
+
 "use client"
 
+import React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+
+import type { Job } from "@/lib/types"
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import type { Job } from "@/lib/types"
-import React from "react"
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -26,7 +20,6 @@ const formSchema = z.object({
   employmentType: z.string().min(2, "Employment type is required."),
   workplace: z.string().min(2, "Workplace is required."),
   description: z.string().min(10, "Short description must be at least 10 characters."),
-  
   fullDescription: z.string().optional(),
   whatYouWillDo: z.string().optional(),
   highlightedSkills: z.string().optional(),
@@ -35,8 +28,7 @@ const formSchema = z.object({
   kpis: z.string().optional(),
   workHours: z.string().optional(),
   benefits: z.string().optional(),
-  hiringProcess: z.string().optional(), // Will be JSON
-  
+  hiringProcess: z.string().optional(),
   salary: z.string().optional(),
   salaryMin: z.string().optional().nullable(),
   salaryMax: z.string().optional().nullable(),
@@ -53,8 +45,9 @@ interface JobFormProps {
   isSubmitting?: boolean;
 }
 
-const arrayToString = (arr: string[] | null | undefined): string => (arr || []).join('\n');
-const jsonToString = (json: any | null | undefined): string => {
+const arrayToString = (arr: any): string => (Array.isArray(arr) ? arr.join('\n') : '');
+
+const jsonToString = (json: any): string => {
     if (!json) return "[]";
     try {
         return JSON.stringify(json, null, 2);
@@ -63,7 +56,9 @@ const jsonToString = (json: any | null | undefined): string => {
     }
 };
 
-const getInitialValues = (initialData: Job | null | undefined): JobFormValues => {
+export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
+  
+  const defaultValues = React.useMemo(() => {
     if (initialData) {
       return {
         id: initialData.id,
@@ -96,17 +91,16 @@ const getInitialValues = (initialData: Job | null | undefined): JobFormValues =>
       salary: "", salaryMin: "", salaryMax: "", experienceLevel: "", education: "",
       otherDuties: "",
     };
-};
+  }, [initialData]);
 
-export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
   const form = useForm<JobFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: getInitialValues(initialData),
+    defaultValues,
   });
 
   React.useEffect(() => {
-    form.reset(getInitialValues(initialData));
-  }, [initialData, form]);
+    form.reset(defaultValues);
+  }, [defaultValues, form]);
 
   return (
     <Card>
