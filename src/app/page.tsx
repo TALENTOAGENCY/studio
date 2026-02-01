@@ -5,7 +5,8 @@ import { Briefcase, Building, Code, MapPin, Receipt, SlidersHorizontal } from "l
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { jobs, Job } from "@/lib/job-data";
+import { type Job } from "@/lib/job-data";
+import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import AppHeader from "@/components/AppHeader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 const JobListItem = ({ job }: { job: Job }) => (
@@ -49,7 +51,33 @@ const JobListItem = ({ job }: { job: Job }) => (
   </Link>
 );
 
+const JobSkeleton = () => (
+    <Card className="flex flex-col h-full">
+        <CardHeader>
+            <Skeleton className="h-6 w-3/4 mb-2" />
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-28" />
+            </div>
+        </CardHeader>
+        <CardContent className="flex-grow">
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-4/5 mb-4" />
+            <div className="flex flex-wrap gap-2">
+                <Skeleton className="h-6 w-16" />
+                <Skeleton className="h-6 w-20" />
+                <Skeleton className="h-6 w-12" />
+            </div>
+        </CardContent>
+    </Card>
+)
+
 export default function Home() {
+  const [allJobs, setAllJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -57,15 +85,33 @@ export default function Home() {
   const [selectedExperience, setSelectedExperience] = useState("");
   const [selectedSalary, setSelectedSalary] = useState("");
   
-  const [filteredJobs, setFilteredJobs] = useState<Job[]>(jobs);
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+        setIsLoading(true);
+        const { data, error } = await supabase
+            .from('jobs')
+            .select('*')
+            .order('id', { ascending: false });
+
+        if (error) {
+            console.error("Error fetching jobs:", error);
+        } else {
+            setAllJobs(data as Job[]);
+        }
+        setIsLoading(false);
+    };
+    fetchJobs();
+  }, []);
 
   const filterOptions = useMemo(() => {
-    const departments = [...new Set(jobs.map(job => job.department))].sort();
-    const locations = [...new Set(jobs.map(job => job.workplace))].sort();
-    const types = [...new Set(jobs.map(job => job.employmentType))].sort();
-    const experienceLevels = [...new Set(jobs.map(job => job.experienceLevel))].filter(Boolean).sort();
+    const departments = [...new Set(allJobs.map(job => job.department))].sort();
+    const locations = [...new Set(allJobs.map(job => job.workplace))].sort();
+    const types = [...new Set(allJobs.map(job => job.employmentType))].sort();
+    const experienceLevels = [...new Set(allJobs.map(job => job.experienceLevel))].filter(Boolean).sort();
     return { departments, locations, types, experienceLevels };
-  }, []);
+  }, [allJobs]);
 
   const salaryBrackets = [
     { label: "Any", value: "" },
@@ -77,7 +123,7 @@ export default function Home() {
 
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
-    const filtered = jobs.filter(job => {
+    const filtered = allJobs.filter(job => {
       const searchMatch =
         !lowercasedQuery ||
         job.title.toLowerCase().includes(lowercasedQuery) ||
@@ -106,7 +152,7 @@ export default function Home() {
       return searchMatch && departmentMatch && locationMatch && typeMatch && experienceMatch && salaryMatch;
     });
     setFilteredJobs(filtered);
-  }, [searchQuery, selectedDepartment, selectedLocation, selectedType, selectedExperience, selectedSalary]);
+  }, [searchQuery, selectedDepartment, selectedLocation, selectedType, selectedExperience, selectedSalary, allJobs]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -251,7 +297,9 @@ export default function Home() {
           </div>
           
           <div className="space-y-6">
-            {filteredJobs.length > 0 ? (
+            {isLoading ? (
+                Array.from({ length: 5 }).map((_, i) => <JobSkeleton key={i} />)
+            ) : filteredJobs.length > 0 ? (
               filteredJobs.map(job => (
                   <JobListItem key={job.id} job={job} />
               ))

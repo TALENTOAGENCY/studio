@@ -3,13 +3,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AUTH_KEY } from '../page';
-import { jobs as initialJobs, Job } from '@/lib/job-data';
+import { type Job } from '@/lib/job-data';
+import { supabase } from '@/lib/supabase';
 import AppHeader from '@/components/AppHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, PlusCircle, Upload, Download } from 'lucide-react';
+import { MoreHorizontal, PlusCircle, Upload, Download, Loader2 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,11 +20,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from '@/hooks/use-toast';
+import { initialJobs } from '@/lib/job-data-fallback';
 
 export default function JobPostDashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [jobs, setJobs] = useState<Job[]>(initialJobs);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -32,8 +35,21 @@ export default function JobPostDashboard() {
       router.replace('/jobpost');
     } else {
       setIsAuthenticated(true);
+      fetchJobs();
     }
   }, [router]);
+
+  const fetchJobs = async () => {
+    setIsLoading(true);
+    const { data, error } = await supabase.from('jobs').select('*').order('id', { ascending: false });
+    if (error) {
+        toast({ variant: 'destructive', title: 'Error fetching jobs', description: error.message });
+        console.error(error);
+    } else if (data) {
+        setJobs(data as Job[]);
+    }
+    setIsLoading(false);
+  };
 
   const handleLogout = () => {
     sessionStorage.removeItem(AUTH_KEY);
@@ -41,14 +57,18 @@ export default function JobPostDashboard() {
   };
   
   const handleAddNew = () => {
-    toast({ title: "Note", description: "Add new job functionality will be implemented in the next step." });
+    router.push('/jobpost/add');
   }
   
   const handleUpload = () => {
-    toast({ title: "Note", description: "CSV upload functionality will be implemented in the next step." });
+    toast({ title: "Note", description: "CSV upload functionality is not yet implemented." });
   }
 
   const handleDownloadTemplate = () => {
+    if (initialJobs.length === 0) {
+      toast({ title: "Note", description: "No job data available to create a template." });
+      return;
+    }
     const headers = Object.keys(initialJobs[0]).filter(key => !['whatYouWillDo', 'highlightedSkills', 'otherSkills', 'requiredSkills', 'kpis', 'workHours', 'benefits', 'hiringProcess', 'fullDescription'].includes(key)).join(',') + '\n';
     const exampleRow = Object.entries(initialJobs[0]).filter(([key]) => !['whatYouWillDo', 'highlightedSkills', 'otherSkills', 'requiredSkills', 'kpis', 'workHours', 'benefits', 'hiringProcess', 'fullDescription'].includes(key)).map(([, value]) => `"${String(value).replace(/"/g, '""')}"`).join(',') + '\n';
 
@@ -67,13 +87,18 @@ export default function JobPostDashboard() {
     }
   }
   
-  const handleDelete = (jobId: string) => {
-    setJobs(prevJobs => prevJobs.filter(job => job.id !== jobId));
-    toast({ title: "Job Removed", description: `Job with ID ${jobId} has been removed from the list.` });
+  const handleDelete = async (jobId: string) => {
+    const { error } = await supabase.from('jobs').delete().match({ id: jobId });
+    if (error) {
+      toast({ variant: 'destructive', title: 'Error deleting job', description: error.message });
+    } else {
+      setJobs(prevJobs => prevJobs.filter(job => job.id !== jobId));
+      toast({ title: "Job Removed", description: `Job with ID ${jobId} has been removed.` });
+    }
   }
   
   const handleEdit = (jobId: string) => {
-     toast({ title: "Note", description: `Editing for job ${jobId} will be implemented in the next step.` });
+     router.push(`/jobpost/edit/${jobId}`);
   }
 
 
@@ -105,10 +130,15 @@ export default function JobPostDashboard() {
         <Card>
             <CardHeader>
                 <CardTitle>Job Listings</CardTitle>
-                <CardDescription>Showing {jobs.length} active job postings. Changes made here are temporary.</CardDescription>
+                <CardDescription>Showing {jobs.length} active job postings from the database.</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="overflow-x-auto">
+                    {isLoading ? (
+                        <div className="flex justify-center items-center h-64">
+                            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        </div>
+                    ) : (
                     <Table>
                         <TableHeader>
                             <TableRow>
@@ -147,6 +177,7 @@ export default function JobPostDashboard() {
                             ))}
                         </TableBody>
                     </Table>
+                    )}
                 </div>
             </CardContent>
         </Card>
