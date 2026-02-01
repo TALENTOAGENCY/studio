@@ -12,6 +12,13 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+// Helper to convert a string (multiline or comma-separated) to an array of strings
+const stringToArray = (str: string | undefined | null) => {
+    if (!str) return [];
+    // Handles both comma-separated and newline-separated
+    return str.split(/[\n,]/).map(item => item.trim()).filter(Boolean);
+};
+
 export default function EditJobPage() {
   const router = useRouter();
   const params = useParams();
@@ -51,16 +58,41 @@ export default function EditJobPage() {
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
+
+    let hiringProcess;
+    try {
+      hiringProcess = values.hiringProcess ? JSON.parse(values.hiringProcess) : [];
+    } catch (e) {
+      toast({
+        variant: 'destructive',
+        title: 'Invalid Hiring Process JSON',
+        description: 'Please provide a valid JSON array for the hiring process.',
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    const updatedJobData = {
+      ...values,
+      whatYouWillDo: stringToArray(values.whatYouWillDo),
+      highlightedSkills: stringToArray(values.highlightedSkills),
+      otherSkills: stringToArray(values.otherSkills),
+      requiredSkills: stringToArray(values.requiredSkills),
+      kpis: stringToArray(values.kpis),
+      workHours: stringToArray(values.workHours),
+      benefits: stringToArray(values.benefits),
+      hiringProcess: hiringProcess,
+      salaryMin: values.salaryMin ? Number(values.salaryMin) : null,
+      salaryMax: values.salaryMax ? Number(values.salaryMax) : null,
+    };
+    // remove id from the update payload
+    delete updatedJobData.id;
+
+
     const supabase = getSupabase();
     const { error } = await supabase
       .from('jobs')
-      .update({
-        title: values.title,
-        department: values.department,
-        employmentType: values.employmentType,
-        workplace: values.workplace,
-        description: values.description,
-      })
+      .update(updatedJobData)
       .eq('id', jobId);
 
     if (error) {
@@ -84,7 +116,7 @@ export default function EditJobPage() {
     <div className="min-h-screen bg-background">
       <AppHeader />
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
              <div className="mb-6">
                 <Button asChild variant="ghost" className="text-muted-foreground">
                 <Link href="/jobpost/dashboard">
