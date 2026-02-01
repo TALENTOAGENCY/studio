@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useForm } from "react-hook-form"
@@ -52,10 +53,7 @@ interface JobFormProps {
   isSubmitting?: boolean;
 }
 
-// Helper to safely join array to string
 const arrayToString = (arr: any[] | null | undefined) => (arr || []).join('\n');
-
-// Helper to safely stringify JSON
 const jsonToString = (json: any | null | undefined) => {
     try {
         return JSON.stringify(json || [], null, 2);
@@ -64,33 +62,34 @@ const jsonToString = (json: any | null | undefined) => {
     }
 }
 
-
 export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
-  const form = useForm<JobFormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: initialData ? {
-      id: initialData.id,
-      title: initialData.title,
-      department: initialData.department,
-      employmentType: initialData.employmentType,
-      workplace: initialData.workplace,
-      description: initialData.description,
-      fullDescription: initialData.fullDescription || '',
-      whatYouWillDo: arrayToString(initialData.whatYouWillDo),
-      highlightedSkills: arrayToString(initialData.highlightedSkills),
-      otherSkills: arrayToString(initialData.otherSkills),
-      requiredSkills: arrayToString(initialData.requiredSkills),
-      kpis: arrayToString(initialData.kpis),
-      workHours: arrayToString(initialData.workHours),
-      benefits: arrayToString(initialData.benefits),
-      hiringProcess: jsonToString(initialData.hiringProcess),
-      salary: initialData.salary || '',
-      salaryMin: initialData.salaryMin?.toString() ?? "",
-      salaryMax: initialData.salaryMax?.toString() ?? "",
-      experienceLevel: initialData.experienceLevel || '',
-      education: initialData.education || '',
-      otherDuties: initialData.otherDuties || '',
-    } : {
+  const getInitialValues = () => {
+    if (initialData) {
+      return {
+        id: initialData.id,
+        title: initialData.title,
+        department: initialData.department,
+        employmentType: initialData.employmentType,
+        workplace: initialData.workplace,
+        description: initialData.description,
+        fullDescription: initialData.fullDescription || '',
+        whatYouWillDo: arrayToString(initialData.whatYouWillDo),
+        highlightedSkills: arrayToString(initialData.highlightedSkills),
+        otherSkills: arrayToString(initialData.otherSkills),
+        requiredSkills: arrayToString(initialData.requiredSkills),
+        kpis: arrayToString(initialData.kpis),
+        workHours: arrayToString(initialData.workHours),
+        benefits: arrayToString(initialData.benefits),
+        hiringProcess: jsonToString(initialData.hiringProcess),
+        salary: initialData.salary || '',
+        salaryMin: initialData.salaryMin?.toString() ?? "",
+        salaryMax: initialData.salaryMax?.toString() ?? "",
+        experienceLevel: initialData.experienceLevel || '',
+        education: initialData.education || '',
+        otherDuties: initialData.otherDuties || '',
+      };
+    }
+    return {
       title: "",
       department: "",
       employmentType: "",
@@ -111,8 +110,13 @@ export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
       experienceLevel: "",
       education: "",
       otherDuties: "",
-    },
-  })
+    };
+  };
+
+  const form = useForm<JobFormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: getInitialValues(),
+  });
 
   return (
     <Card>
@@ -402,7 +406,6 @@ export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
                         </FormItem>
                     )}
                 />
-
 
                 <Button type="submit" disabled={isSubmitting}>
                     {isSubmitting ? (initialData ? "Saving..." : "Creating...") : (initialData ? "Save Changes" : "Create Job")}
