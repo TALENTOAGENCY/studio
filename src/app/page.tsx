@@ -99,7 +99,7 @@ export default function Home() {
             console.error("Error fetching jobs:", error);
             setAllJobs([]);
         } else {
-            setAllJobs(data as Job[]);
+            setAllJobs(data || []);
         }
         setIsLoading(false);
     };
@@ -145,14 +145,12 @@ export default function Home() {
       const experienceMatch = !selectedExperience || job.experienceLevel === selectedExperience;
 
       const salaryMatch = !selectedSalary || (() => {
-          if (job.salaryMin === null && job.salaryMax === null) return false;
+          if (job.salaryMin === null && job.salaryMax === null) return true; // Show jobs without salary info if no salary filter is set
 
           const [filterMin, filterMax] = selectedSalary.split('-').map(s => s === 'Infinity' ? Infinity : Number(s));
 
-          const jobMin = job.salaryMin ?? job.salaryMax;
-          const jobMax = job.salaryMax ?? job.salaryMin;
-
-          if (jobMin === null || jobMax === null) return false;
+          const jobMin = job.salaryMin ?? -Infinity;
+          const jobMax = job.salaryMax ?? Infinity;
 
           return jobMin < filterMax && jobMax >= filterMin;
       })();

@@ -45,8 +45,9 @@ export default function JobPostDashboard() {
     if (error) {
         toast({ variant: 'destructive', title: 'Error fetching jobs', description: error.message });
         console.error(error);
-    } else if (data) {
-        setJobs(data as Job[]);
+        setJobs([]);
+    } else {
+        setJobs(data || []);
     }
     setIsLoading(false);
   };
