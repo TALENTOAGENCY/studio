@@ -1,4 +1,3 @@
-
 export interface Job {
     id: string;
     title: string;
@@ -875,6 +874,71 @@ const job13: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'e
     department: "Product"
 };
 
+const job14: Omit<Job, 'id' | 'fullDescription' | 'salaryMin' | 'salaryMax' | 'experienceLevel'> = {
+    title: "Product Designer",
+    description: "TALENTO is seeking a seasoned Product Lead to drive innovation for one of its clients—an established US-based Product Company. Step into a global engineering team that’s fast-paced, idea-driven, and growth-focused.",
+    whatYouWillDo: [
+        "Translate stakeholder-defined objectives into clearly framed design problems and practical product solutions.",
+        "Lead solution exploration and design execution, developing explicit design rationale that connects design decisions to business goals, constraints, and success metrics.",
+        "Design end-to-end product experiences for responsive web and mobile, taking work from low- to high-fidelity and delivering production-ready design files and interactive prototypes for engineering handoff.",
+        "Own design quality through implementation, partnering with engineers to ensure interaction details, visual polish, and system consistency are maintained in the shipped product.",
+        "Conduct user research and translate insights into actionable design decisions that improve the overall experience.",
+        "Apply and maintain our design system, ensuring consistent use of components, styles, and patterns from Figma through implementation.",
+        "Produce clear design artifacts (flows, wireframes, mockups, prototypes) that drive alignment and accelerate execution."
+    ],
+    highlightedSkills: ["Figma", "UX/UI Design", "User Research", "Prototyping", "Design Systems"],
+    otherSkills: ["Agile", "Web Design", "Mobile Design"],
+    requiredSkills: [
+        "5-8+ years of experience designing and shipping digital products for responsive web and native mobile platforms.",
+        "A strong portfolio demonstrating your ability to translate complex product problems into intuitive solutions, with examples of shipping, learning, and iterating with real users.",
+        "Experience conducting various user research methods and applying insights to design decisions.",
+        "Strong command of UX/UI fundamentals including usability, information architecture, interaction design, and visual design.",
+        "Experience working within agile product teams and collaborating effectively across time zones.",
+        "Expert-level proficiency in Figma, including component-based design and collaboration with engineering.",
+        "Strong communication skills with the ability to articulate design decisions and trade-offs to cross-functional partners."
+    ],
+    kpis: [
+        "Quality and usability of design solutions.",
+        "Effective collaboration with product and engineering teams.",
+        "Positive impact of user research on product outcomes.",
+        "Consistency and contribution to the design system."
+    ],
+    workHours: [
+        "Working Days: Hybrid, Monday to Friday (3 days work from home + 2 days work from office)",
+        "Working Hours: 1:00 pm to 10:00 pm",
+        "Office Location: Uttara, Dhaka, Bangladesh (Hybrid)"
+    ],
+    otherDuties: "We may use artificial intelligence (AI) tools to support parts of the hiring process, such as reviewing applications, analyzing resumes, or assessing responses. These tools assist our recruitment team but do not replace human judgment. Final hiring decisions are ultimately made by humans. If you would like more information about how your data is processed, please contact us.",
+    education: "Not specified.",
+    salary: "BDT 220,000 - 285,000 (Monthly)",
+    benefits: [
+        "Mobile bill",
+        "Gym Membership",
+        "Medical Insurance",
+        "Festival bonus",
+        "Performance Reward Bonus",
+        "Gratuity benefit.",
+        "Lunch/Dinner Facilities: Fully Subsidized",
+        "Sound work-life balance - Regular working hours: 8 hours/day, 5 days a week.",
+        "Friendly work environment. Flexible leave/vacation policy.",
+        "A great learning opportunity.",
+        "Opportunity to work with cross-cultural teams with the USA.",
+        "Annual performance evaluation and increment.",
+        "Semi-annual reflection opportunities - because growth is the name of the game",
+        "Employee Drop Off - we’ve got your commute covered"
+    ],
+    hiringProcess: [
+        { title: "Initial Screening", details: "A conversation with our talent acquisition team." },
+        { title: "Portfolio Review", details: "A deep dive into your design work and process." },
+        { title: "Design Challenge", details: "A practical session to see your design skills in action." },
+        { title: "Final Interview", details: "A final conversation with leadership." },
+        { title: "Offer", details: "Successful candidates receive a competitive offer." }
+    ],
+    workplace: "Dhaka (Hybrid)",
+    employmentType: "Full-time",
+    department: "Product Design"
+};
+
 
 const buildFullDescription = (job: Omit<Job, 'id' | 'fullDescription' | 'experienceLevel' | 'salaryMin' | 'salaryMax'>) => {
     return `
@@ -896,6 +960,14 @@ Education: ${job.education}
 };
 
 export const jobs: Job[] = [
+    {
+        ...job14,
+        id: "ta1545",
+        fullDescription: buildFullDescription(job14),
+        experienceLevel: "Senior-level",
+        salaryMin: 220000,
+        salaryMax: 285000,
+    },
     {
         ...job13,
         id: "ta1544",
