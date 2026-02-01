@@ -1,4 +1,3 @@
-
 "use client"
 
 import React from "react"
@@ -56,51 +55,40 @@ const jsonToString = (json: any): string => {
     }
 };
 
-export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
-  
-  const defaultValues = React.useMemo(() => {
-    if (initialData) {
-      return {
-        id: initialData.id,
-        title: initialData.title || "",
-        department: initialData.department || "",
-        employmentType: initialData.employmentType || "",
-        workplace: initialData.workplace || "",
-        description: initialData.description || "",
-        fullDescription: initialData.fullDescription || '',
-        whatYouWillDo: arrayToString(initialData.whatYouWillDo),
-        highlightedSkills: arrayToString(initialData.highlightedSkills),
-        otherSkills: arrayToString(initialData.otherSkills),
-        requiredSkills: arrayToString(initialData.requiredSkills),
-        kpis: arrayToString(initialData.kpis),
-        workHours: arrayToString(initialData.workHours),
-        benefits: arrayToString(initialData.benefits),
-        hiringProcess: jsonToString(initialData.hiringProcess),
-        salary: initialData.salary || '',
-        salaryMin: initialData.salaryMin?.toString() ?? "",
-        salaryMax: initialData.salaryMax?.toString() ?? "",
-        experienceLevel: initialData.experienceLevel || '',
-        education: initialData.education || '',
-        otherDuties: initialData.otherDuties || '',
-      };
-    }
-    return {
-      title: "", department: "", employmentType: "", workplace: "", description: "",
-      fullDescription: "", whatYouWillDo: "", highlightedSkills: "", otherSkills: "",
-      requiredSkills: "", kpis: "", workHours: "", benefits: "", hiringProcess: "[]",
-      salary: "", salaryMin: "", salaryMax: "", experienceLevel: "", education: "",
-      otherDuties: "",
-    };
-  }, [initialData]);
+export default function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
+  const defaultValues = React.useMemo(() => ({
+    id: initialData?.id,
+    title: initialData?.title || "",
+    department: initialData?.department || "",
+    employmentType: initialData?.employmentType || "",
+    workplace: initialData?.workplace || "",
+    description: initialData?.description || "",
+    fullDescription: initialData?.fullDescription || '',
+    whatYouWillDo: arrayToString(initialData?.whatYouWillDo),
+    highlightedSkills: arrayToString(initialData?.highlightedSkills),
+    otherSkills: arrayToString(initialData?.otherSkills),
+    requiredSkills: arrayToString(initialData?.requiredSkills),
+    kpis: arrayToString(initialData?.kpis),
+    workHours: arrayToString(initialData?.workHours),
+    benefits: arrayToString(initialData?.benefits),
+    hiringProcess: jsonToString(initialData?.hiringProcess),
+    salary: initialData?.salary || '',
+    salaryMin: initialData?.salaryMin?.toString() ?? "",
+    salaryMax: initialData?.salaryMax?.toString() ?? "",
+    experienceLevel: initialData?.experienceLevel || '',
+    education: initialData?.education || '',
+    otherDuties: initialData?.otherDuties || '',
+  }), [initialData]);
 
   const form = useForm<JobFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
-
+  
   React.useEffect(() => {
     form.reset(defaultValues);
   }, [defaultValues, form]);
+
 
   return (
     <Card>

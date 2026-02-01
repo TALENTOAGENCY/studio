@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { JobForm } from '@/components/job/JobForm';
+import JobForm from '@/components/job/JobForm';
 import { getSupabase } from '@/lib/supabase';
 import type { Job } from '@/lib/types';
 import AppHeader from '@/components/AppHeader';
