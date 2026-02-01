@@ -41,10 +41,10 @@ const JobListItem = ({ job }: { job: Job }) => (
         <CardContent className="flex-grow">
             <p className="text-foreground/80 mb-4 line-clamp-2">{job.description}</p>
             <div className="flex flex-wrap gap-2 mb-6">
-                {job.highlightedSkills.slice(0, 5).map(skill => (
+                {(job.highlightedSkills || []).slice(0, 5).map(skill => (
                 <Badge key={skill} variant="secondary" className="font-normal">{skill}</Badge>
                 ))}
-                {job.highlightedSkills.length > 5 && <Badge variant="outline">+{job.highlightedSkills.length - 5} more</Badge>}
+                {(job.highlightedSkills?.length || 0) > 5 && <Badge variant="outline">+{job.highlightedSkills.length - 5} more</Badge>}
             </div>
         </CardContent>
     </Card>
@@ -97,6 +97,7 @@ export default function Home() {
 
         if (error) {
             console.error("Error fetching jobs:", error);
+            setAllJobs([]);
         } else {
             setAllJobs(data as Job[]);
         }
@@ -106,9 +107,10 @@ export default function Home() {
   }, []);
 
   const filterOptions = useMemo(() => {
-    const departments = [...new Set(allJobs.map(job => job.department))].sort();
-    const locations = [...new Set(allJobs.map(job => job.workplace))].sort();
-    const types = [...new Set(allJobs.map(job => job.employmentType))].sort();
+    if (!allJobs) return { departments: [], locations: [], types: [], experienceLevels: [] };
+    const departments = [...new Set(allJobs.map(job => job.department).filter(Boolean))].sort();
+    const locations = [...new Set(allJobs.map(job => job.workplace).filter(Boolean))].sort();
+    const types = [...new Set(allJobs.map(job => job.employmentType).filter(Boolean))].sort();
     const experienceLevels = [...new Set(allJobs.map(job => job.experienceLevel))].filter(Boolean).sort();
     return { departments, locations, types, experienceLevels };
   }, [allJobs]);
@@ -122,14 +124,20 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    if (!allJobs) {
+        setFilteredJobs([]);
+        return;
+    }
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = allJobs.filter(job => {
+      if (!job) return false;
+        
       const searchMatch =
         !lowercasedQuery ||
-        job.title.toLowerCase().includes(lowercasedQuery) ||
-        job.description.toLowerCase().includes(lowercasedQuery) ||
-        job.highlightedSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery)) ||
-        job.otherSkills.some(skill => skill.toLowerCase().includes(lowercasedQuery));
+        (job.title || '').toLowerCase().includes(lowercasedQuery) ||
+        (job.description || '').toLowerCase().includes(lowercasedQuery) ||
+        (job.highlightedSkills || []).some(skill => (skill || '').toLowerCase().includes(lowercasedQuery)) ||
+        (job.otherSkills || []).some(skill => (skill || '').toLowerCase().includes(lowercasedQuery));
       
       const departmentMatch = !selectedDepartment || job.department === selectedDepartment;
       const locationMatch = !selectedLocation || job.workplace === selectedLocation;
@@ -137,14 +145,14 @@ export default function Home() {
       const experienceMatch = !selectedExperience || job.experienceLevel === selectedExperience;
 
       const salaryMatch = !selectedSalary || (() => {
-          if (!job.salaryMin && !job.salaryMax) return false;
+          if (job.salaryMin === null && job.salaryMax === null) return false;
 
           const [filterMin, filterMax] = selectedSalary.split('-').map(s => s === 'Infinity' ? Infinity : Number(s));
 
           const jobMin = job.salaryMin ?? job.salaryMax;
           const jobMax = job.salaryMax ?? job.salaryMin;
 
-          if (!jobMin || !jobMax) return false;
+          if (jobMin === null || jobMax === null) return false;
 
           return jobMin < filterMax && jobMax >= filterMin;
       })();

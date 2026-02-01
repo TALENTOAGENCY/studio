@@ -81,29 +81,29 @@ export default function JobDetail({ job }: { job: Job }) {
 
               <JobSection title="What you will do?" icon={<Briefcase className="w-5 h-5 text-primary" />}>
                 <ul className="list-disc pl-5 space-y-2">
-                  {job.whatYouWillDo.map((item, i) => <li key={i}>{item}</li>)}
+                  {(job.whatYouWillDo || []).map((item, i) => <li key={i}>{item}</li>)}
                 </ul>
               </JobSection>
 
               <JobSection title="Required Skill Sets" icon={<ListChecks className="w-5 h-5 text-primary" />}>
                 <div className="flex flex-wrap gap-2 mb-4">
-                    {job.highlightedSkills.map(skill => <SkillBadge key={skill} skill={skill} variant="primary" />)}
-                    {job.otherSkills.map(skill => <SkillBadge key={skill} skill={skill} />)}
+                    {(job.highlightedSkills || []).map(skill => <SkillBadge key={skill} skill={skill} variant="primary" />)}
+                    {(job.otherSkills || []).map(skill => <SkillBadge key={skill} skill={skill} />)}
                 </div>
                 <ul className="list-disc pl-5 space-y-2">
-                  {job.requiredSkills.map((item, i) => <li key={i}>{item}</li>)}
+                  {(job.requiredSkills || []).map((item, i) => <li key={i}>{item}</li>)}
                 </ul>
               </JobSection>
 
               <div className="grid md:grid-cols-2 gap-x-8">
                 <JobSection title="Key Performance Matrix" icon={<Target className="w-5 h-5 text-primary" />}>
                   <ul className="list-disc pl-5 space-y-2">
-                    {job.kpis.map((item, i) => <li key={i}>{item}</li>)}
+                    {(job.kpis || []).map((item, i) => <li key={i}>{item}</li>)}
                   </ul>
                 </JobSection>
                 <JobSection title="Hour of Work & Others" icon={<Clock className="w-5 h-5 text-primary" />}>
                   <ul className="list-disc pl-5 space-y-2">
-                    {job.workHours.map((item, i) => <li key={i}>{item}</li>)}
+                    {(job.workHours || []).map((item, i) => <li key={i}>{item}</li>)}
                   </ul>
                 </JobSection>
               </div>
@@ -111,7 +111,7 @@ export default function JobDetail({ job }: { job: Job }) {
               <JobSection title="Salary & Benefits" icon={<DollarSign className="w-5 h-5 text-primary" />}>
                 <p className="mb-4">{job.salary}</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {job.benefits.map((benefit, i) => (
+                  {(job.benefits || []).map((benefit, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className="flex-shrink-0 mt-1"><Award className="w-4 h-4 text-accent" /></div>
                       <span>{benefit}</span>
@@ -122,8 +122,8 @@ export default function JobDetail({ job }: { job: Job }) {
 
               <JobSection title="Hiring Process" icon={<Network className="w-5 h-5 text-primary" />}>
                 <div className="space-y-6">
-                  {job.hiringProcess.map((step, i) => (
-                    <HiringProcessStep key={i} title={step.title} details={step.details} isLast={i === job.hiringProcess.length - 1} />
+                  {(job.hiringProcess || []).map((step, i) => (
+                    <HiringProcessStep key={i} title={step.title} details={step.details} isLast={i === (job.hiringProcess || []).length - 1} />
                   ))}
                 </div>
               </JobSection>
