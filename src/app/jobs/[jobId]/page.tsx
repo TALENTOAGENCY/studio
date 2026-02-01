@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation';
 import JobDetail from "@/components/job/JobDetail";
 import { supabase } from '@/lib/supabase';
-import type { Job } from '@/lib/job-data';
+import type { Job } from '@/lib/types';
 
 async function getJob(jobId: string) {
     const { data, error } = await supabase
@@ -25,7 +25,21 @@ export default async function JobDetailPage({ params }: { params: { jobId: strin
     notFound();
   }
 
-  return <JobDetail job={jobData as Job} />;
+  // Ensure arrays are not null before passing to component
+  const job = {
+    ...jobData,
+    whatYouWillDo: jobData.whatYouWillDo || [],
+    highlightedSkills: jobData.highlightedSkills || [],
+    otherSkills: jobData.otherSkills || [],
+    requiredSkills: jobData.requiredSkills || [],
+    kpis: jobData.kpis || [],
+    workHours: jobData.workHours || [],
+    benefits: jobData.benefits || [],
+    hiringProcess: jobData.hiringProcess || [],
+  };
+
+
+  return <JobDetail job={job as Job} />;
 }
 
 export async function generateStaticParams() {

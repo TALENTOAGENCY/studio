@@ -1,7 +1,8 @@
+
 "use client";
 
 import { useState } from 'react';
-import { Job } from "@/lib/job-data";
+import type { Job } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Share2 } from "lucide-react";

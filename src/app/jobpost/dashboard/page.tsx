@@ -1,9 +1,10 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AUTH_KEY } from '../page';
-import { type Job } from '@/lib/job-data';
+import type { Job } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import AppHeader from '@/components/AppHeader';
 import { Button } from '@/components/ui/button';

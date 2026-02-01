@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useForm } from "react-hook-form"
@@ -16,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import type { Job } from "@/lib/job-data"
+import type { Job } from "@/lib/types"
 
 const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),

@@ -1,8 +1,9 @@
+
 "use client";
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Job } from '@/lib/job-data';
+import type { Job } from '@/lib/types';
 
 export function JobApplication({ job }: { job: Job }) {
   const emailBody = `Hello,

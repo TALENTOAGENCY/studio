@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -5,7 +6,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { JobForm } from '@/components/job/JobForm';
 import { supabase } from '@/lib/supabase';
-import { type Job } from '@/lib/job-data';
+import type { Job } from '@/lib/types';
 import AppHeader from '@/components/AppHeader';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';

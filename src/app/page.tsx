@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
@@ -5,7 +6,7 @@ import { Briefcase, Building, Code, MapPin, Receipt, SlidersHorizontal } from "l
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { type Job } from "@/lib/job-data";
+import type { Job } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import AppHeader from "@/components/AppHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertTriangle } from "lucide-react";
 
 
 const JobListItem = ({ job }: { job: Job }) => (
@@ -79,6 +82,7 @@ export default function Home() {
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -92,6 +96,7 @@ export default function Home() {
   useEffect(() => {
     const fetchJobs = async () => {
         setIsLoading(true);
+        setFetchError(null);
         const { data, error } = await supabase
             .from('jobs')
             .select('*')
@@ -99,6 +104,7 @@ export default function Home() {
 
         if (error) {
             console.error("Error fetching jobs:", error.message);
+            setFetchError("Could not fetch job listings. Please check your network connection and Supabase configuration.");
             toast({
                 variant: 'destructive',
                 title: 'Failed to load jobs',
@@ -114,11 +120,11 @@ export default function Home() {
   }, [toast]);
 
   const filterOptions = useMemo(() => {
-    if (!allJobs) return { departments: [], locations: [], types: [], experienceLevels: [] };
-    const departments = [...new Set(allJobs.map(job => job.department).filter(Boolean))].sort();
-    const locations = [...new Set(allJobs.map(job => job.workplace).filter(Boolean))].sort();
-    const types = [...new Set(allJobs.map(job => job.employmentType).filter(Boolean))].sort();
-    const experienceLevels = [...new Set(allJobs.map(job => job.experienceLevel))].filter(Boolean).sort();
+    const safeJobs = allJobs || [];
+    const departments = [...new Set(safeJobs.map(job => job.department).filter(Boolean))].sort();
+    const locations = [...new Set(safeJobs.map(job => job.workplace).filter(Boolean))].sort();
+    const types = [...new Set(safeJobs.map(job => job.employmentType).filter(Boolean))].sort();
+    const experienceLevels = [...new Set(safeJobs.map(job => job.experienceLevel))].filter(Boolean).sort();
     return { departments, locations, types, experienceLevels };
   }, [allJobs]);
 
@@ -131,12 +137,9 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    if (!allJobs) {
-        setFilteredJobs([]);
-        return;
-    }
+    const safeJobs = allJobs || [];
     const lowercasedQuery = searchQuery.toLowerCase();
-    const filtered = allJobs.filter(job => {
+    const filtered = safeJobs.filter(job => {
       if (!job) return false;
         
       const searchMatch =
@@ -312,6 +315,12 @@ export default function Home() {
           <div className="space-y-6">
             {isLoading ? (
                 Array.from({ length: 5 }).map((_, i) => <JobSkeleton key={i} />)
+            ) : fetchError ? (
+                <Alert variant="destructive">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{fetchError}</AlertDescription>
+                </Alert>
             ) : filteredJobs.length > 0 ? (
               filteredJobs.map(job => (
                   <JobListItem key={job.id} job={job} />
