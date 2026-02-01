@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import AppHeader from "@/components/AppHeader";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
 
 
 const JobListItem = ({ job }: { job: Job }) => (
@@ -77,6 +78,7 @@ const JobSkeleton = () => (
 export default function Home() {
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -96,7 +98,12 @@ export default function Home() {
             .order('id', { ascending: false });
 
         if (error) {
-            console.error("Error fetching jobs:", error);
+            console.error("Error fetching jobs:", error.message);
+            toast({
+                variant: 'destructive',
+                title: 'Failed to load jobs',
+                description: "There was a problem connecting to the database.",
+            });
             setAllJobs([]);
         } else {
             setAllJobs(data || []);
@@ -104,7 +111,7 @@ export default function Home() {
         setIsLoading(false);
     };
     fetchJobs();
-  }, []);
+  }, [toast]);
 
   const filterOptions = useMemo(() => {
     if (!allJobs) return { departments: [], locations: [], types: [], experienceLevels: [] };
