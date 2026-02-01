@@ -1,10 +1,12 @@
-
 import { notFound } from 'next/navigation';
 import JobDetail from "@/components/job/JobDetail";
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import type { Job } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 async function getJob(jobId: string) {
+    const supabase = getSupabase();
     const { data, error } = await supabase
         .from('jobs')
         .select('*')
@@ -40,14 +42,4 @@ export default async function JobDetailPage({ params }: { params: { jobId: strin
 
 
   return <JobDetail job={job as Job} />;
-}
-
-export async function generateStaticParams() {
-  const { data: jobs, error } = await supabase.from('jobs').select('id');
-  if (error || !jobs) {
-      return [];
-  }
-  return jobs.map((job) => ({
-    jobId: job.id.toString(),
-  }));
 }

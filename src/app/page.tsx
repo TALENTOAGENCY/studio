@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
@@ -7,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import type { Job } from "@/lib/types";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -97,24 +96,28 @@ export default function Home() {
     const fetchJobs = async () => {
         setIsLoading(true);
         setFetchError(null);
-        const { data, error } = await supabase
-            .from('jobs')
-            .select('*')
-            .order('id', { ascending: false });
+        try {
+            const supabase = getSupabase();
+            const { data, error } = await supabase
+                .from('jobs')
+                .select('*')
+                .order('id', { ascending: false });
 
-        if (error) {
+            if (error) throw error;
+
+            setAllJobs(data || []);
+        } catch (error: any) {
             console.error("Error fetching jobs:", error.message);
-            setFetchError("Could not fetch job listings. Please check your network connection and Supabase configuration.");
+            setFetchError("Could not fetch job listings. Please check your network connection and Supabase configuration. Ensure environment variables are set in your deployment settings.");
             toast({
                 variant: 'destructive',
                 title: 'Failed to load jobs',
                 description: "There was a problem connecting to the database.",
             });
             setAllJobs([]);
-        } else {
-            setAllJobs(data || []);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
     fetchJobs();
   }, [toast]);

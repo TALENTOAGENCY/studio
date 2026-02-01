@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { JobForm } from '@/components/job/JobForm';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import AppHeader from '@/components/AppHeader';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -39,6 +39,7 @@ export default function AddJobPage() {
       fullDescription: values.description,
     };
 
+    const supabase = getSupabase();
     const { error } = await supabase.from('jobs').insert([newJob]);
 
     if (error) {

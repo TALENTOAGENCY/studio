@@ -1,11 +1,10 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AUTH_KEY } from '../page';
 import type { Job } from '@/lib/types';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import AppHeader from '@/components/AppHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -42,6 +41,7 @@ export default function JobPostDashboard() {
 
   const fetchJobs = async () => {
     setIsLoading(true);
+    const supabase = getSupabase();
     const { data, error } = await supabase.from('jobs').select('*').order('id', { ascending: false });
     if (error) {
         toast({ variant: 'destructive', title: 'Error fetching jobs', description: error.message });
@@ -90,6 +90,7 @@ export default function JobPostDashboard() {
   }
   
   const handleDelete = async (jobId: string) => {
+    const supabase = getSupabase();
     const { error } = await supabase.from('jobs').delete().match({ id: jobId });
     if (error) {
       toast({ variant: 'destructive', title: 'Error deleting job', description: error.message });

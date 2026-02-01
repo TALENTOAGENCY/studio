@@ -1,11 +1,10 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { JobForm } from '@/components/job/JobForm';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import type { Job } from '@/lib/types';
 import AppHeader from '@/components/AppHeader';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -27,6 +26,7 @@ export default function EditJobPage() {
     if (!jobId) return;
     const fetchJob = async () => {
       setIsLoading(true);
+      const supabase = getSupabase();
       const { data, error } = await supabase
         .from('jobs')
         .select('*')
@@ -51,6 +51,7 @@ export default function EditJobPage() {
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
+    const supabase = getSupabase();
     const { error } = await supabase
       .from('jobs')
       .update({
