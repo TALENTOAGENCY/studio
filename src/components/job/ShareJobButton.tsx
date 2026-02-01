@@ -11,23 +11,24 @@ export function ShareJobButton({ job }: { job: Job }) {
   const { toast } = useToast();
   const [isCopied, setIsCopied] = useState(false);
 
-  const handleShare = () => {
+  const handleShare = async () => {
     const jobUrl = `${window.location.origin}/jobs/${job.id}`;
-    navigator.clipboard.writeText(jobUrl).then(() => {
+    try {
+      await navigator.clipboard.writeText(jobUrl);
       setIsCopied(true);
       toast({
         title: "Link Copied!",
         description: "The job link has been copied to your clipboard.",
       });
       setTimeout(() => setIsCopied(false), 2000);
-    }).catch(err => {
-      console.error('Failed to copy text: ', err);
+    } catch (err) {
+      console.error('Clipboard API failed: ', err);
       toast({
         variant: "destructive",
-        title: "Oops!",
-        description: "Could not copy the link.",
+        title: "Copy Failed",
+        description: "Your browser may have blocked this feature for security reasons.",
       });
-    });
+    }
   };
 
   return (
