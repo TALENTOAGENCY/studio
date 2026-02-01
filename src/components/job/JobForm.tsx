@@ -63,8 +63,7 @@ const jsonToString = (json: any | null | undefined): string => {
     }
 };
 
-export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
-  const defaultValues = React.useMemo(() => {
+const getInitialValues = (initialData: Job | null | undefined): JobFormValues => {
     if (initialData) {
       return {
         id: initialData.id,
@@ -97,16 +96,17 @@ export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
       salary: "", salaryMin: "", salaryMax: "", experienceLevel: "", education: "",
       otherDuties: "",
     };
-  }, [initialData]);
+};
 
+export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
   const form = useForm<JobFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: getInitialValues(initialData),
   });
 
   React.useEffect(() => {
-    form.reset(defaultValues);
-  }, [defaultValues, form]);
+    form.reset(getInitialValues(initialData));
+  }, [initialData, form]);
 
   return (
     <Card>
