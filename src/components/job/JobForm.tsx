@@ -1,10 +1,10 @@
-
 "use client"
 
 import React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import { Loader2, Sparkles } from "lucide-react"
 
 import type { Job } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/hooks/use-toast"
+import { generateJobPost } from "@/ai/flows/generateJobPostFlow"
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -56,57 +58,93 @@ const jsonToString = (json: any): string => {
     }
 };
 
-export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
-  
-  const defaultValues = React.useMemo(() => {
-    if (initialData) {
-      return {
-        id: initialData.id,
-        title: initialData.title || "",
-        department: initialData.department || "",
-        employmentType: initialData.employmentType || "",
-        workplace: initialData.workplace || "",
-        description: initialData.description || "",
-        fullDescription: initialData.fullDescription || '',
-        whatYouWillDo: arrayToString(initialData.whatYouWillDo),
-        highlightedSkills: arrayToString(initialData.highlightedSkills),
-        otherSkills: arrayToString(initialData.otherSkills),
-        requiredSkills: arrayToString(initialData.requiredSkills),
-        kpis: arrayToString(initialData.kpis),
-        workHours: arrayToString(initialData.workHours),
-        benefits: arrayToString(initialData.benefits),
-        hiringProcess: jsonToString(initialData.hiringProcess),
-        salary: initialData.salary || '',
-        salaryMin: initialData.salaryMin?.toString() ?? "",
-        salaryMax: initialData.salaryMax?.toString() ?? "",
-        experienceLevel: initialData.experienceLevel || '',
-        education: initialData.education || '',
-        otherDuties: initialData.otherDuties || '',
-      };
-    }
-    return {
-      title: "", department: "", employmentType: "", workplace: "", description: "",
-      fullDescription: "", whatYouWillDo: "", highlightedSkills: "", otherSkills: "",
-      requiredSkills: "", kpis: "", workHours: "", benefits: "", hiringProcess: "[]",
-      salary: "", salaryMin: "", salaryMax: "", experienceLevel: "", education: "",
-      otherDuties: "",
-    };
-  }, [initialData]);
+export default function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
+  const { toast } = useToast();
+  const [isGenerating, setIsGenerating] = React.useState(false);
+
+  const defaultValues = React.useMemo(() => ({
+    id: initialData?.id,
+    title: initialData?.title || "",
+    department: initialData?.department || "",
+    employmentType: initialData?.employmentType || "",
+    workplace: initialData?.workplace || "",
+    description: initialData?.description || "",
+    fullDescription: initialData?.fullDescription || '',
+    whatYouWillDo: arrayToString(initialData?.whatYouWillDo),
+    highlightedSkills: arrayToString(initialData?.highlightedSkills),
+    otherSkills: arrayToString(initialData?.otherSkills),
+    requiredSkills: arrayToString(initialData?.requiredSkills),
+    kpis: arrayToString(initialData?.kpis),
+    workHours: arrayToString(initialData?.workHours),
+    benefits: arrayToString(initialData?.benefits),
+    hiringProcess: jsonToString(initialData?.hiringProcess),
+    salary: initialData?.salary || '',
+    salaryMin: initialData?.salaryMin?.toString() ?? "",
+    salaryMax: initialData?.salaryMax?.toString() ?? "",
+    experienceLevel: initialData?.experienceLevel || '',
+    education: initialData?.education || '',
+    otherDuties: initialData?.otherDuties || '',
+  }), [initialData]);
 
   const form = useForm<JobFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
-
+  
   React.useEffect(() => {
     form.reset(defaultValues);
   }, [defaultValues, form]);
 
+  const handleGenerate = async () => {
+    const { title, department, highlightedSkills } = form.getValues();
+    if (!title || !department || !highlightedSkills) {
+        toast({
+            variant: "destructive",
+            title: "Missing Information",
+            description: "Please fill in Title, Department, and Highlighted Skills to generate content with AI.",
+        });
+        return;
+    }
+    setIsGenerating(true);
+    try {
+        const result = await generateJobPost({ title, department, skills: highlightedSkills });
+        
+        form.setValue("description", result.description, { shouldValidate: true });
+        form.setValue("whatYouWillDo", result.whatYouWillDo.join('\n'), { shouldValidate: true });
+        form.setValue("requiredSkills", result.requiredSkills.join('\n'), { shouldValidate: true });
+        form.setValue("kpis", result.kpis.join('\n'), { shouldValidate: true });
+        form.setValue("benefits", result.benefits.join('\n'), { shouldValidate: true });
+
+        toast({
+            title: "Content Generated",
+            description: "AI has filled in several fields for you. Please review and adjust as needed.",
+        });
+    } catch (error) {
+        console.error("AI generation failed:", error);
+        toast({
+            variant: "destructive",
+            title: "AI Generation Failed",
+            description: "Could not generate job post content. Please try again.",
+        });
+    } finally {
+        setIsGenerating(false);
+    }
+  };
+
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{initialData ? 'Edit Job' : 'Add New Job'}</CardTitle>
-        <CardDescription>Fill in the details for the job posting. All fields will be saved to the database.</CardDescription>
+        <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-4">
+          <div>
+            <CardTitle>{initialData ? 'Edit Job' : 'Add New Job'}</CardTitle>
+            <CardDescription>Fill in the details for the job posting. All fields will be saved to the database.</CardDescription>
+          </div>
+          <Button type="button" variant="outline" onClick={handleGenerate} disabled={isGenerating || isSubmitting} className="w-full sm:w-auto">
+            {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+            Generate with AI
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -141,6 +179,15 @@ export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
                 </FormItem>
               )} />
             </div>
+            
+            <FormField control={form.control} name="highlightedSkills" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Highlighted Skills</FormLabel>
+                <FormControl><Textarea className="resize-y min-h-[80px]" {...field} /></FormControl>
+                <FormDescription>Key skills for the role. Enter one per line. Used by AI to generate content.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )} />
 
             <FormField control={form.control} name="description" render={({ field }) => (
               <FormItem>
@@ -172,14 +219,6 @@ export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
                 <FormLabel>Required Skills</FormLabel>
                 <FormControl><Textarea className="resize-y min-h-[120px]" {...field} /></FormControl>
                 <FormDescription>Enter each skill on a new line.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )} />
-            <FormField control={form.control} name="highlightedSkills" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Highlighted Skills</FormLabel>
-                <FormControl><Textarea className="resize-y min-h-[80px]" {...field} /></FormControl>
-                <FormDescription>Comma-separated or new-line separated skills that appear as badges.</FormDescription>
                 <FormMessage />
               </FormItem>
             )} />
@@ -271,7 +310,7 @@ export function JobForm({ initialData, onSubmit, isSubmitting }: JobFormProps) {
               </FormItem>
             )} />
 
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting || isGenerating}>
               {isSubmitting ? (initialData ? "Saving..." : "Creating...") : (initialData ? "Save Changes" : "Create Job")}
             </Button>
           </form>
