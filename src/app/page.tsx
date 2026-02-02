@@ -91,6 +91,8 @@ export default function Home() {
   const [selectedSalary, setSelectedSalary] = useState("");
   
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 7;
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -158,7 +160,7 @@ export default function Home() {
       const experienceMatch = !selectedExperience || job.experienceLevel === selectedExperience;
 
       const salaryMatch = !selectedSalary || (() => {
-          if (job.salaryMin === null && job.salaryMax === null) return true; // Show jobs without salary info if no salary filter is set
+          if (job.salaryMin === null && job.salaryMax === null) return true;
 
           const [filterMin, filterMax] = selectedSalary.split('-').map(s => s === 'Infinity' ? Infinity : Number(s));
 
@@ -171,6 +173,7 @@ export default function Home() {
       return searchMatch && departmentMatch && locationMatch && typeMatch && experienceMatch && salaryMatch;
     });
     setFilteredJobs(filtered);
+    setCurrentPage(1);
   }, [searchQuery, selectedDepartment, selectedLocation, selectedType, selectedExperience, selectedSalary, allJobs]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,6 +189,9 @@ export default function Home() {
   };
 
   const hasActiveFilters = !!(selectedDepartment || selectedLocation || selectedType || selectedExperience || selectedSalary);
+
+  const currentJobs = filteredJobs.slice((currentPage - 1) * jobsPerPage, currentPage * jobsPerPage);
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   return (
     <div className="min-h-screen bg-background">
@@ -324,8 +330,8 @@ export default function Home() {
                   <AlertTitle>Error</AlertTitle>
                   <AlertDescription>{fetchError}</AlertDescription>
                 </Alert>
-            ) : filteredJobs.length > 0 ? (
-              filteredJobs.map(job => (
+            ) : currentJobs.length > 0 ? (
+              currentJobs.map(job => (
                   <JobListItem key={job.id} job={job} />
               ))
             ) : (
@@ -336,6 +342,27 @@ export default function Home() {
             )}
           </div>
 
+          {totalPages > 1 && (
+            <div className="mt-8 flex items-center justify-center space-x-4">
+              <Button
+                  variant="outline"
+                  onClick={() => setCurrentPage(p => p - 1)}
+                  disabled={currentPage === 1}
+              >
+                  Previous
+              </Button>
+              <span className="text-muted-foreground">
+                  Page {currentPage} of {totalPages}
+              </span>
+              <Button
+                  variant="outline"
+                  onClick={() => setCurrentPage(p => p + 1)}
+                  disabled={currentPage === totalPages}
+              >
+                  Next
+              </Button>
+            </div>
+          )}
         </div>
       </main>
     </div>
