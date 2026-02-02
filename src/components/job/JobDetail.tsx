@@ -67,6 +67,7 @@ export default function JobDetail({ job }: { job: Job }) {
                     <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {job.workplace}</div>
                     <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {job.employmentType}</div>
                     <div className="flex items-center gap-1.5"><Building className="h-4 w-4" /> {job.department}</div>
+                    <div className="flex items-center gap-1.5"><DollarSign className="h-4 w-4" /> {job.salary}</div>
                   </div>
                 </div>
                 <div className="flex-shrink-0 flex items-start gap-2">
