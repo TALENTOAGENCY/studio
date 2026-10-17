@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import TalentoLogo from "@/components/icons/TalentoLogo";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -15,8 +15,6 @@ import {
   LogOut,
   ArrowLeft,
   CheckCircle2,
-  Lock,
-  Database,
   Clock,
   MailCheck
 } from "lucide-react";
@@ -90,9 +88,6 @@ export default function PendingApprovalView() {
             <CardTitle className="text-2xl font-bold font-headline">
               Account Pending Authorization
             </CardTitle>
-            <CardDescription className="text-sm text-muted-foreground">
-              Your email has been verified. Access to the admin dashboard requires manual authorization by the database administrator in the <strong>Admin_User</strong> table.
-            </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-4">
@@ -115,27 +110,6 @@ export default function PendingApprovalView() {
                   {adminUser?.role || "Pending Approval"}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Dashboard Access:</span>
-                <span className="font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                  <Lock className="w-3.5 h-3.5" />
-                  Restricted (is_approved: false)
-                </span>
-              </div>
-            </div>
-
-            {/* Instruction for Database Admins */}
-            <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 space-y-2 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1.5 font-semibold text-foreground">
-                <Database className="w-4 h-4 text-primary" />
-                How to Approve in Supabase:
-              </div>
-              <ol className="list-decimal pl-4 space-y-1">
-                <li>Log in to your <strong>Supabase Project Dashboard</strong>.</li>
-                <li>Go to <strong>Table Editor</strong> &rarr; select <strong>Admin_User</strong> table.</li>
-                <li>Find row for <code className="bg-muted px-1 rounded text-primary">{user?.email}</code>.</li>
-                <li>Toggle the <code className="bg-muted px-1 rounded text-primary">is_approved</code> column to <strong className="text-emerald-500">true</strong>.</li>
-              </ol>
             </div>
           </CardContent>
 
