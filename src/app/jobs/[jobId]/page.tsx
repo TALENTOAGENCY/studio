@@ -20,8 +20,9 @@ async function getJob(jobId: string) {
     return data;
 }
 
-export default async function JobDetailPage({ params }: { params: { jobId: string } }) {
-  const jobData = await getJob(params.jobId);
+export default async function JobDetailPage({ params }: { params: Promise<{ jobId: string }> }) {
+  const { jobId } = await params;
+  const jobData = await getJob(jobId);
 
   if (!jobData) {
     notFound();
