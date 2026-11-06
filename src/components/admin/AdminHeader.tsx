@@ -26,8 +26,8 @@ export default function AdminHeader() {
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo & Admin Badge */}
           <div className="flex items-center gap-3">
-            <Link href="/admin" className="flex items-center gap-2 p-1.5 rounded-md hover:bg-muted/50 transition-colors">
-              <TalentoLogo className="h-7 w-auto text-primary" />
+            <Link href="/admin" className="flex items-center gap-2 py-1 px-1.5 rounded-md hover:opacity-90 transition-opacity">
+              <TalentoLogo className="h-7 sm:h-8 w-auto" />
             </Link>
             <Badge variant="outline" className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-semibold bg-primary/10 text-primary border-primary/20">
               <Shield className="w-3 h-3" />

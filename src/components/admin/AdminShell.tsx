@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { InitialsAvatar } from "@/components/admin/ui";
+import { TalentoMark } from "@/components/icons/TalentoLogo";
 import {
   LayoutDashboard,
   PlusCircle,
@@ -48,19 +49,6 @@ export const NAV_ITEMS: NavItem[] = [
 const isActive = (pathname: string, href: string) =>
   href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
 
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 50 50" className={className} aria-hidden>
-      <g stroke="currentColor" strokeWidth="2.2" fill="none">
-        <path d="M 26 1.02 A 24 24 0 1 1 24 1.02" />
-        <circle cx="25" cy="25" r="16" />
-        <circle cx="25" cy="25" r="8" />
-      </g>
-      <circle cx="25" cy="25" r="2.5" fill="currentColor" />
-    </svg>
-  );
-}
-
 /* ------------------------------------------------------------------ */
 /* Sidebar contents (shared by desktop + mobile)                       */
 /* ------------------------------------------------------------------ */
@@ -75,12 +63,12 @@ function SidebarBody({ collapsed, onNavigate }: { collapsed: boolean; onNavigate
       {/* Brand */}
       <div className={cn("flex h-16 items-center gap-2.5 px-4", collapsed && "justify-center px-0")}>
         <Link href="/admin" onClick={onNavigate} className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-rose-500 text-white shadow-md shadow-accent/30">
-            <LogoMark className="h-5 w-5" />
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-card border border-primary/30 p-1.5 shadow-sm">
+            <TalentoMark className="h-6 w-6" />
           </span>
           {!collapsed && (
             <span className="leading-tight">
-              <span className="block text-sm font-bold font-headline tracking-wide">TALENTO</span>
+              <span className="block text-sm font-bold font-headline tracking-wide text-foreground">TALENTO</span>
               <span className="block text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Admin Studio</span>
             </span>
           )}

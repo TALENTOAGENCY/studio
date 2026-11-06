@@ -152,8 +152,8 @@ export default function LoginPage() {
           <ArrowLeft className="w-4 h-4" />
           Back to Careers
         </Link>
-        <Link href="https://talento.agency" target="_blank" rel="noopener noreferrer" className="p-2 rounded-md bg-card/60 backdrop-blur border">
-          <TalentoLogo className="h-7 w-auto text-primary" />
+        <Link href="https://talento.agency" target="_blank" rel="noopener noreferrer" className="py-1 px-2 rounded-md hover:opacity-90 transition-opacity">
+          <TalentoLogo className="h-7 sm:h-8 w-auto" />
         </Link>
       </div>
 

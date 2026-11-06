@@ -25,8 +25,8 @@ const SkillBadge = ({ skill, variant = "secondary" }: SkillBadgeProps) => (
 const JobSection = ({ title, icon, children }: { title: string, icon: React.ReactNode, children: React.ReactNode }) => (
   <section className="py-6">
     <div className="flex items-center gap-3 mb-4">
-      {icon}
-      <h2 className="text-xl font-headline font-semibold text-primary">{title}</h2>
+      <div className="text-gold">{icon}</div>
+      <h2 className="text-xl font-headline font-semibold text-foreground">{title}</h2>
     </div>
     <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground/80 space-y-4">
       {children}
@@ -62,7 +62,7 @@ export default function JobDetail({ job }: { job: Job }) {
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div>
                   <Badge variant="outline" className="mb-2">{job.workplace}</Badge>
-                  <h1 className="text-3xl md:text-4xl font-bold font-headline text-primary">{job.title}</h1>
+                  <h1 className="text-3xl md:text-4xl font-bold font-headline text-foreground">{job.title}</h1>
                   <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground">
                     <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {job.workplace}</div>
                     <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {job.employmentType}</div>

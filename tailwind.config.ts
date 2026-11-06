@@ -18,10 +18,33 @@ export default {
     extend: {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
-        headline: ['"Space Grotesk"', 'sans-serif'],
+        headline: ['"Playfair Display"', '"Space Grotesk"', 'serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        brand: ['Cinzel', 'serif'],
         code: ['monospace'],
       },
       colors: {
+        gold: {
+          DEFAULT: '#CAA561',
+          50: '#FAF6EE',
+          100: '#F5EDDC',
+          200: '#EBD9B8',
+          300: '#DFC28F',
+          400: '#D5AE6B',
+          500: '#CAA561',
+          600: '#B58E45',
+          700: '#8E6F33',
+          800: '#685125',
+          900: '#433418',
+        },
+        navy: {
+          DEFAULT: '#08162A',
+          card: '#0E223D',
+          surface: '#142947',
+          border: '#1A3353',
+          900: '#08162A',
+          950: '#040B15',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
