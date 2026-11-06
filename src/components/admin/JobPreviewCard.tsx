@@ -36,8 +36,8 @@ const SkillBadge = ({ skill, variant = "secondary" }: { skill: string; variant?:
 const JobSection = ({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) => (
   <section className="py-6">
     <div className="flex items-center gap-3 mb-4">
-      {icon}
-      <h2 className="text-xl font-headline font-semibold text-primary">{title}</h2>
+      <div className="text-primary">{icon}</div>
+      <h2 className="text-xl font-headline font-semibold text-foreground">{title}</h2>
     </div>
     <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground/80 space-y-4">
       {children}
@@ -142,7 +142,7 @@ export default function JobPreviewCard({ job, onBackToEdit, onPublish, isPublish
                   </Badge>
                 )}
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold font-headline text-primary">
+              <h1 className="text-3xl md:text-4xl font-bold font-headline text-foreground">
                 {job.title || "Untitled Position"}
               </h1>
               <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-muted-foreground text-sm">

@@ -30,8 +30,13 @@ export default function AppHeader() {
     <header className={`sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b transition-transform duration-300 ease-in-out ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <a href="https://talento.agency/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-card p-2 rounded-md">
-            <TalentoLogo className="h-8 w-auto text-primary" />
+          <a
+            href="https://talento.agency/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:opacity-90 transition-opacity py-1"
+          >
+            <TalentoLogo className="h-8 sm:h-9 w-auto" />
           </a>
           <nav className="flex items-center gap-4">
              <ThemeToggle />

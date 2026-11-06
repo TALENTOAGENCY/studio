@@ -27,10 +27,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const JobListItem = ({ job }: { job: Job }) => (
-  <Link href={`/jobs/${job.id}`} className="block group rounded-lg focus:outline-none">
-    <Card className="relative hover:shadow-lg transition-shadow flex flex-col h-full group-hover:border-primary/50">
+  <Link href={`/jobs/${job.id}`} className="block group rounded-2xl focus:outline-none">
+    <Card className="relative hover:shadow-xl transition-all duration-300 flex flex-col h-full rounded-2xl border-border hover:border-gold/50">
       <CardHeader>
-        <CardTitle className="font-headline text-xl text-primary pr-24">{job.title}</CardTitle>
+        <CardTitle className="font-headline text-xl text-foreground group-hover:text-gold transition-colors pr-24">{job.title}</CardTitle>
         <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {job.workplace}</div>
           <div className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {job.employmentType}</div>
@@ -216,11 +216,11 @@ export default function JobListingsView({ initialJobs }: JobListingsViewProps) {
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8 space-y-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary">
+            <h1 className="text-4xl md:text-5xl font-bold font-headline text-foreground">
               Find Your Next Opportunity
             </h1>
             <p className="text-lg text-muted-foreground">
-              We connect talented developers with innovative companies changing the world.
+              We connect exceptional leadership and talented professionals with world-class companies.
             </p>
           </div>
 
@@ -362,7 +362,7 @@ export default function JobListingsView({ initialJobs }: JobListingsViewProps) {
               ))
             ) : (
               <Card className="text-center p-8">
-                <p className="text-muted-foreground">No jobs found matching your criteria.</p>
+                <p className="text-muted-foreground">No jobs found matching your criteria </p>
                 {hasActiveFilters && (
                   <Button variant="link" onClick={clearFilters} className="mt-2">
                     Clear all filters
